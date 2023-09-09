@@ -1,0 +1,7 @@
+# Ignore all files in the node_modules directory
+node_modules/
+
+# Ignore specific files like metro.ts and other-pattern-to-ignore.js
+jest.config.js
+babel.config.js
+metro.config.js
