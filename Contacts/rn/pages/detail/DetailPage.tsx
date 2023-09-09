@@ -1,13 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
+import {colors} from '../../utils/Colors';
 import {PageProps, Page} from '../../stack/StackConfig';
 import SharedButton from '../../shared-components/buttons/SharedButton';
-import {colors} from '../../utils/Colors';
 import SharedHeader from '../../shared-components/header/SharedHeader';
 import DetailButtonPanel from './components/DetailButtonPanel';
 import DetailInfoPanel from './components/info/DetailInfoPanel';
 
-const contactPath = '../../assets/background.jpg';
 const editPath = '../../assets/edit.png';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
@@ -22,7 +21,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   return (
     <View style={styles.main}>
       <SharedHeader
-        jsxElement={
+        element={
           <SharedButton
             style={styles.editButton}
             imageSource={require(editPath)}
@@ -33,7 +32,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
       />
 
       <View style={styles.detailContainer}>
-        <Image source={require(contactPath)} style={styles.contactIcon} />
+        <Image source={contact.imagePath} style={styles.contactIcon} />
         <View style={styles.panel}>
           <DetailButtonPanel
             onCall={onAction}
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: colors.lighterGreen,
     borderWidth: 4,
-    backgroundColor: 'white',
   },
 
   panel: {

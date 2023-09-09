@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 interface SharedHeaderProps {
-  jsxElement: JSX.Element;
+  element: JSX.Element;
 }
 
 const SharedHeader: React.FC<SharedHeaderProps> = props => {
-  const {jsxElement} = props;
+  const {element} = props;
 
-  return <View style={styles.main}>{jsxElement}</View>;
+  return <View style={styles.main}>{element}</View>;
 };
 
 const styles = StyleSheet.create({

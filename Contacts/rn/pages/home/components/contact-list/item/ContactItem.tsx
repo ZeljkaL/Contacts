@@ -10,8 +10,6 @@ interface ContactItemProps {
   onPress: (contact: Contact) => void;
 }
 
-const iconPath = '../../../../../assets/contact.png';
-
 const ContactItem: React.FC<ContactItemProps> = props => {
   const {contact, onPress} = props;
 
@@ -23,7 +21,7 @@ const ContactItem: React.FC<ContactItemProps> = props => {
     <TouchableOpacity style={styles.main} onPress={onContactPress}>
       <Image
         resizeMode="contain"
-        source={require(iconPath)}
+        source={contact.imagePath}
         style={styles.icon}
       />
 

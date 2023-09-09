@@ -2,20 +2,21 @@ import React from 'react';
 import {StyleProp, TextInput, ViewStyle} from 'react-native';
 import {colors} from '../../utils/Colors';
 
-export type TextInputType = string | number | null;
-
 interface SharedTextInputProps {
-  value: TextInputType;
+  value?: string;
   placeholder: string;
   numeric: boolean;
 
   style: StyleProp<ViewStyle>;
   placeholderTextColor?: string;
 
-  onChange: (value: TextInputType) => void;
-
+  onChange: (value: string) => void;
   onFocus?: (focused: boolean) => void;
 }
+
+const Constants = {
+  REGEX: /^[0-9]*$/,
+};
 
 const SharedTextInput: React.FC<SharedTextInputProps> = props => {
   const {
@@ -28,12 +29,18 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
     onFocus,
   } = props;
 
-  const onChangeNumericInput = (inputText: string) => {
-    // Use regular expression to only allow digits (0-9)
-    const regex = /^[0-9]*$/;
-    if (regex.test(inputText)) {
-      onChange(Number(inputText));
+  const onChangeInput = (inputText: string) => {
+    if (!numeric) {
+      onChange(inputText);
+      return;
     }
+
+    if (!Constants.REGEX.test(inputText)) {
+      return;
+    }
+
+    // Regular expression allows only digits (0-9)
+    onChange(inputText);
   };
 
   const onTextFocus = (focus: boolean) => {
@@ -43,11 +50,12 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
 
     onFocus(focus);
   };
+
   return (
     <TextInput
       style={style}
-      value={value === null ? '' : value.toString()}
-      onChangeText={numeric ? onChangeNumericInput : onChange}
+      value={!value ? '' : value.toString()}
+      onChangeText={onChangeInput}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor ?? colors.lightGray}
       onFocus={() => onTextFocus(true)}

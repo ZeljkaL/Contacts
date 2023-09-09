@@ -4,16 +4,16 @@ import {colors} from '../../utils/Colors';
 
 interface SharedModalProps {
   visibility: boolean;
-  jsxElement: JSX.Element;
+  element: JSX.Element;
 }
 
 const SharedModal: React.FC<SharedModalProps> = props => {
-  const {visibility, jsxElement} = props;
+  const {visibility, element} = props;
 
   return (
     <View style={[styles.modal, !visibility && styles.hidden]}>
       <View style={styles.overlay} />
-      {jsxElement}
+      {element}
     </View>
   );
 };

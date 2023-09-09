@@ -3,17 +3,15 @@ import {StyleSheet, View} from 'react-native';
 import {DetailProps, Page, PageProps} from '../../stack/StackConfig';
 import ContactList, {Contact} from './components/contact-list/ContactList';
 import {CONTACTS_DATA} from './components/MockedData';
-import CreateContactModal from './components/create-contact/CreateContactModal';
 import SharedHeader from '../../shared-components/header/SharedHeader';
 import HomeHeader from './components/header/HomeHeader';
-import {TextInputType} from '../../shared-components/text-input-fields/SharedTextInput';
+import SharedModal from '../../shared-components/modals/SharedModal';
+import CreateContactView from './components/create-contact/CreateContactView';
 
 const HomePage: React.FC<PageProps<Page.Home>> = props => {
   const {navigation} = props;
 
   const [contacts, setContacts] = useState<Contact[]>(CONTACTS_DATA);
-  const [nameFilter, setNameFilter] = useState('');
-
   const [createContactVisible, setCreateContactVisible] =
     useState<boolean>(false);
 
@@ -32,41 +30,32 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
     setContacts(prev => [...prev, contact]);
   }, []);
 
-  const onSearch = useCallback(
-    (value: TextInputType) => {
-      const filteredContacts = contacts.filter(contact =>
-        contact.name.includes(value as string),
-      );
-      setContacts(filteredContacts);
-      setNameFilter(value as string);
-    },
-    [contacts],
-  );
-
-  const onClear = useCallback(() => {
-    setContacts(CONTACTS_DATA);
-    setNameFilter('');
+  const onSearch = useCallback((value: string) => {
+    const filteredContacts = CONTACTS_DATA.filter(contact =>
+      contact.name.includes(value),
+    );
+    setContacts(filteredContacts);
   }, []);
 
   return (
     <View style={styles.main}>
       <SharedHeader
-        jsxElement={
+        element={
           <HomeHeader
-            nameFilter={nameFilter}
             onSearch={onSearch}
             onAdd={() => setCreateContactVisible(true)}
-            onClear={onClear}
           />
         }
       />
-
       <ContactList contacts={contacts} onContactPress={onContactPress} />
-
-      <CreateContactModal
+      <SharedModal
         visibility={createContactVisible}
-        onSave={onSaveContact}
-        onCancel={() => setCreateContactVisible(false)}
+        element={
+          <CreateContactView
+            onSave={onSaveContact}
+            onCancel={() => setCreateContactVisible(false)}
+          />
+        }
       />
     </View>
   );

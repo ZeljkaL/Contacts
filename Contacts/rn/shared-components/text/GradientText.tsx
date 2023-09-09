@@ -25,6 +25,7 @@ const GradientText: React.FC<GradientTextProps> = props => {
 const styles = StyleSheet.create({
   gradient: {
     height: 25,
+    width: 300,
   },
 
   text: {

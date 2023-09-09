@@ -1,13 +1,15 @@
 import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import SharedButton from '../../../../../shared-components/buttons/SharedButton';
-import {TextInputType} from '../../../../../shared-components/text-input-fields/SharedTextInput';
-import {colors} from '../../../../../utils/Colors';
-import {Contact} from '../../contact-list/ContactList';
-import TextField from './TextField';
 import uuid from 'react-native-uuid';
+import ImagePicker from 'react-native-image-crop-picker';
+import SharedButton from '../../../../shared-components/buttons/SharedButton';
+import {colors} from '../../../../utils/Colors';
+import {Contact} from '../contact-list/ContactList';
+import TextField from './components/TextField';
+import {IContact} from '../../../../types/IContact';
 
-const imageIcon = '../../../../../assets/imIcon.png';
+const imageIcon = '../../../../assets/imIcon.png';
+const contactDefaultPath = require('../../../../assets/contact.png');
 
 const Constants = {
   TITLE: 'Create New Contact',
@@ -26,55 +28,85 @@ interface CreateContactViewProps {
 const CreateContactView: React.FC<CreateContactViewProps> = props => {
   const {onSave, onCancel} = props;
 
-  const [name, setName] = useState<TextInputType>(null);
-  const [number, setNumber] = useState<TextInputType>(null);
+  const [contact, setContact] = useState<IContact | null>(null);
+
+  const onUploadImage = useCallback(() => {
+    ImagePicker.openPicker({
+      multiple: false,
+    }).then(image => {
+      setContact(prevState => ({
+        ...prevState,
+        imagePath: image.path,
+      }));
+    });
+  }, []);
+
+  const onReset = useCallback(() => {
+    setContact(null);
+    onCancel();
+  }, [onCancel]);
 
   const onSaveContact = useCallback(() => {
-    if (name === null || number === null) {
+    if (!contact || !contact.name || !contact.number) {
       return;
     }
 
-    const newContact: Contact = {
+    onSave({
       id: uuid.v4().toString(),
-      name: name as string,
-      phoneNumber: number.toString(),
-    };
-
-    onSave(newContact);
-    onCancel();
-  }, [name, number, onSave, onCancel]);
+      name: contact.name,
+      phoneNumber: contact.number,
+      imagePath: contact.imagePath
+        ? {uri: contact.imagePath}
+        : contactDefaultPath,
+    });
+    onReset();
+  }, [contact, onSave, onReset]);
 
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{Constants.TITLE}</Text>
       <SharedButton
-        imageSource={require(imageIcon)}
-        imageStyle={styles.icon}
+        imageSource={
+          contact && contact.imagePath
+            ? {uri: contact.imagePath}
+            : require(imageIcon)
+        }
+        imageStyle={
+          contact && contact.imagePath ? styles.contactImage : styles.icon
+        }
         style={styles.iconButton}
-        onPress={() => {
-          return;
-        }}
+        onPress={onUploadImage}
       />
       <TextField
-        value={name}
+        value={contact?.name}
         numeric={false}
         label={Constants.NAME_LABEL}
         placeholder={Constants.NAME_PLACEHOLDER}
-        onChange={setName}
+        onChange={value =>
+          setContact(prevState => ({
+            ...prevState,
+            name: value as string,
+          }))
+        }
       />
       <TextField
-        value={number}
+        value={contact?.number}
         numeric={true}
         label={Constants.NUMBER_LABEL}
         placeholder={Constants.NUMBER_PLACEHOLDER}
-        onChange={setNumber}
+        onChange={value =>
+          setContact(prevState => ({
+            ...prevState,
+            number: value as string,
+          }))
+        }
       />
       <View style={styles.buttons}>
         <SharedButton
           title={'Cancel'}
           style={[styles.button, styles.cancelButton]}
           textStyle={styles.buttonText}
-          onPress={onCancel}
+          onPress={onReset}
         />
 
         <SharedButton
@@ -122,6 +154,11 @@ const styles = StyleSheet.create({
     height: '50%',
     tintColor: colors.white,
     opacity: 0.3,
+  },
+
+  contactImage: {
+    width: '100%',
+    height: '100%',
   },
 
   buttons: {

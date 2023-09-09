@@ -28,7 +28,7 @@ const SharedButton: React.FC<SharedButtonProps> = props => {
   return (
     <TouchableOpacity style={style} onPress={onPress}>
       {imageSource && (
-        <Image resizeMode="contain" source={imageSource} style={imageStyle} />
+        <Image resizeMode="contain" source={imageSource} style={imageStyle}/>
       )}
       {title && <Text style={textStyle}>{title}</Text>}
     </TouchableOpacity>

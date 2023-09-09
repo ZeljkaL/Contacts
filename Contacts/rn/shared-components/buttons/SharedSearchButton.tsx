@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import SharedTextInput, {
-  TextInputType,
-} from '../text-input-fields/SharedTextInput';
+import SharedTextInput from '../text-input-fields/SharedTextInput';
 import {colors} from '../../utils/Colors';
 import SharedButton from './SharedButton';
 
@@ -11,19 +9,19 @@ const searchIconPath = '../../assets/search.png';
 interface SharedSearchButtonProps {
   value: string;
 
-  onSearch: (value: TextInputType) => void;
-  onClear: () => void;
+  onSearch: (value: string) => void;
 }
 
 const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
-  const {value, onSearch, onClear} = props;
+  const {value, onSearch} = props;
 
   const [focus, setFocus] = useState<boolean>(false);
 
-  const onClearText = () => {
+  const onClearText = useCallback(() => {
     setFocus(false);
-    onClear();
-  };
+    onSearch('');
+  }, [onSearch]);
+
   return (
     <View style={[styles.main, focus && styles.focusStyle]}>
       <Image
@@ -31,6 +29,7 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
         source={require(searchIconPath)}
         style={styles.searchIcon}
       />
+
       <SharedTextInput
         numeric={false}
         style={styles.inputStyle}
@@ -40,6 +39,7 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
         onChange={onSearch}
         onFocus={setFocus}
       />
+
       <SharedButton
         title={'X'}
         style={[styles.button, focus && styles.activeButton]}

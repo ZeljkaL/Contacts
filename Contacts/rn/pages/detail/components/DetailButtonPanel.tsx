@@ -21,6 +21,7 @@ const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
         imageStyle={styles.buttonIcon}
         onPress={props.onCall}
       />
+
       <SharedButton
         style={[styles.button, styles.messageButton]}
         imageStyle={styles.buttonIcon}

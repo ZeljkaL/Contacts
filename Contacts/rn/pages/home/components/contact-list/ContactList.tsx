@@ -1,11 +1,13 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, ImageSourcePropType} from 'react-native';
 import ContactItem from './item/ContactItem';
 
+// TODO: TypeORM model
 export interface Contact {
   id: string;
   name: string;
   phoneNumber: string;
+  imagePath: ImageSourcePropType;
 }
 
 interface ContactListProps {

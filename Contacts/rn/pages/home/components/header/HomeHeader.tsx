@@ -1,28 +1,30 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import SharedButton from '../../../../shared-components/buttons/SharedButton';
 import {colors} from '../../../../utils/Colors';
 import SharedSearchButton from '../../../../shared-components/buttons/SharedSearchButton';
-import {TextInputType} from '../../../../shared-components/text-input-fields/SharedTextInput';
 
 interface HomeHeaderProps {
-  nameFilter: string;
-
-  onSearch: (value: TextInputType) => void;
   onAdd: () => void;
-  onClear: () => void;
+  onSearch: (value: string) => void;
 }
 
 const HomeHeader: React.FC<HomeHeaderProps> = props => {
-  const {nameFilter, onSearch, onAdd, onClear} = props;
+  const {onAdd, onSearch} = props;
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearchInput = useCallback(
+    (value: string) => {
+      setSearchValue(value);
+      onSearch(value);
+    },
+    [onSearch],
+  );
 
   return (
     <>
-      <SharedSearchButton
-        value={nameFilter}
-        onSearch={onSearch}
-        onClear={onClear}
-      />
+      <SharedSearchButton value={searchValue} onSearch={onSearchInput} />
       <SharedButton
         title={'+'}
         style={styles.button}
