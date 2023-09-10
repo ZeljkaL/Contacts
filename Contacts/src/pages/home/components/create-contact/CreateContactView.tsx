@@ -4,12 +4,11 @@ import uuid from 'react-native-uuid';
 import ImagePicker from 'react-native-image-crop-picker';
 import SharedButton from '../../../../shared-components/buttons/SharedButton';
 import {colors} from '../../../../utils/Colors';
-import {Contact} from '../contact-list/ContactList';
 import TextField from './components/TextField';
 import {IContact} from '../../../../types/IContact';
+import {Contact} from '../../../../local-database/entities/Contact';
 
 const imageIcon = '../../../../assets/imIcon.png';
-const contactDefaultPath = require('../../../../assets/contact.png');
 
 const Constants = {
   TITLE: 'Create New Contact',
@@ -36,7 +35,7 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
     }).then(image => {
       setContact(prevState => ({
         ...prevState,
-        imagePath: image.path,
+        imagePath: image.sourceURL,
       }));
     });
   }, []);
@@ -55,9 +54,7 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
       id: uuid.v4().toString(),
       name: contact.name,
       phoneNumber: contact.number,
-      imagePath: contact.imagePath
-        ? {uri: contact.imagePath}
-        : contactDefaultPath,
+      imagePath: contact.imagePath,
     });
     onReset();
   }, [contact, onSave, onReset]);
@@ -66,12 +63,10 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
     <View style={styles.main}>
       <Text style={styles.title}>{Constants.TITLE}</Text>
       <SharedButton
-        imageSource={
-          contact && contact.imagePath
-            ? {uri: contact.imagePath}
-            : require(imageIcon)
+        iconPath={
+          contact && contact.imagePath ? contact.imagePath : require(imageIcon)
         }
-        imageStyle={
+        iconStyle={
           contact && contact.imagePath ? styles.contactImage : styles.icon
         }
         style={styles.iconButton}

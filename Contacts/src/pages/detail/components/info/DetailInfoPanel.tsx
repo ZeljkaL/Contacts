@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Contact} from '../../../home/components/contact-list/ContactList';
 import DetailInfoItem from './item/DetailInfoItem';
+import {Contact} from '../../../../local-database/entities/Contact';
 
 interface DetailInfoPanelProps {
   contact: Contact;

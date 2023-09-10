@@ -1,15 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Page, ScreenOptions, Stack, StackTheme} from './rn/stack/StackConfig';
-import {colors} from './rn/utils/Colors';
-import HomePage from './rn/pages/home/HomePage';
-import DetailPage from './rn/pages/detail/DetailPage';
+import {Page, ScreenOptions, Stack, StackTheme} from './src/stack/StackConfig';
+import {colors} from './src/utils/Colors';
+import HomePage from './src/pages/home/HomePage';
+import DetailPage from './src/pages/detail/DetailPage';
+import {DatabaseConnection} from './src/local-database/DatabaseConnection';
 
 const App = () => {
+  const [initialized, setInitialized] = useState<boolean>(false);
+
   useEffect(() => {
     StatusBar.setHidden(false);
+  }, []);
+
+  useEffect(() => {
+    DatabaseConnection.instance.setup().then(() => {
+      setInitialized(true);
+    });
   }, []);
 
   return (
@@ -18,12 +27,14 @@ const App = () => {
         <LinearGradient
           colors={[colors.lightGray, colors.lightGray, colors.darkGray]}
           style={styles.linearGradient}>
-          <Stack.Navigator
-            initialRouteName={Page.Home}
-            screenOptions={ScreenOptions}>
-            <Stack.Screen name={Page.Home} component={HomePage} />
-            <Stack.Screen name={Page.Details} component={DetailPage} />
-          </Stack.Navigator>
+          {initialized && (
+            <Stack.Navigator
+              initialRouteName={Page.Home}
+              screenOptions={ScreenOptions}>
+              <Stack.Screen name={Page.Home} component={HomePage} />
+              <Stack.Screen name={Page.Details} component={DetailPage} />
+            </Stack.Navigator>
+          )}
         </LinearGradient>
       </SafeAreaView>
     </NavigationContainer>

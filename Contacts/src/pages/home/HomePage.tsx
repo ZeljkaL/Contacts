@@ -1,37 +1,52 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {DetailProps, Page, PageProps} from '../../stack/StackConfig';
-import ContactList, {Contact} from './components/contact-list/ContactList';
-import {CONTACTS_DATA} from './components/MockedData';
+import {Page, PageProps} from '../../stack/StackConfig';
+import ContactList from './components/contact-list/ContactList';
 import SharedHeader from '../../shared-components/header/SharedHeader';
 import HomeHeader from './components/header/HomeHeader';
 import SharedModal from '../../shared-components/modals/SharedModal';
 import CreateContactView from './components/create-contact/CreateContactView';
+import {Contact} from '../../local-database/entities/Contact';
 
 const HomePage: React.FC<PageProps<Page.Home>> = props => {
   const {navigation} = props;
 
-  const [contacts, setContacts] = useState<Contact[]>(CONTACTS_DATA);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [createContactVisible, setCreateContactVisible] =
     useState<boolean>(false);
 
+  const updateContacts = useCallback(async () => {
+    const localContacts = await Contact.find();
+    setContacts([...localContacts]);
+  }, []);
+
+  useEffect(() => {
+    updateContacts();
+  }, [updateContacts]);
+
   const onContactPress = useCallback(
     (contact: Contact) => {
-      const detailProps: DetailProps = {
+      navigation.navigate(Page.Details, {
         contact: contact,
-      };
-
-      navigation.navigate(Page.Details, detailProps);
+      });
     },
     [navigation],
   );
 
-  const onSaveContact = useCallback((contact: Contact) => {
-    setContacts(prev => [...prev, contact]);
-  }, []);
+  const onSaveContact = useCallback(
+    async (contact: Contact) => {
+      await Contact.save(contact);
 
-  const onSearch = useCallback((value: string) => {
-    const filteredContacts = CONTACTS_DATA.filter(contact =>
+      updateContacts();
+    },
+    [updateContacts],
+  );
+
+  const onSearch = useCallback(async (value: string) => {
+    const localContacts = await Contact.find();
+
+    // TODO: Implement typeORM filter
+    const filteredContacts = localContacts.filter(contact =>
       contact.name.includes(value),
     );
     setContacts(filteredContacts);

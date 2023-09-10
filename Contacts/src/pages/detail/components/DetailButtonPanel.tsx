@@ -17,22 +17,22 @@ const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
     <View style={styles.main}>
       <SharedButton
         style={[styles.button, styles.callButton]}
-        imageSource={require(callPath)}
-        imageStyle={styles.buttonIcon}
+        iconPath={require(callPath)}
+        iconStyle={styles.buttonIcon}
         onPress={props.onCall}
       />
 
       <SharedButton
         style={[styles.button, styles.messageButton]}
-        imageStyle={styles.buttonIcon}
-        imageSource={require(msgPath)}
+        iconPath={require(msgPath)}
+        iconStyle={styles.buttonIcon}
         onPress={props.onMessage}
       />
 
       <SharedButton
         style={styles.button}
-        imageSource={require(callPath)}
-        imageStyle={styles.buttonIcon}
+        iconPath={require(callPath)}
+        iconStyle={styles.buttonIcon}
         onPress={props.onShare}
       />
     </View>

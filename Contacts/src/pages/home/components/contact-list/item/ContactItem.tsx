@@ -1,8 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Contact} from '../ContactList';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../../../../utils/Colors';
 import GradientText from '../../../../../shared-components/text/GradientText';
+import {Contact} from '../../../../../local-database/entities/Contact';
+import SharedImage from '../../../../../shared-components/images/SharedImage';
+
+const defaultContactPath = '../../../../../assets/contact.png';
 
 interface ContactItemProps {
   contact: Contact;
@@ -19,12 +22,10 @@ const ContactItem: React.FC<ContactItemProps> = props => {
 
   return (
     <TouchableOpacity style={styles.main} onPress={onContactPress}>
-      <Image
-        resizeMode="contain"
-        source={contact.imagePath}
+      <SharedImage
+        path={contact.imagePath ?? require(defaultContactPath)}
         style={styles.icon}
       />
-
       <View>
         <GradientText
           value={contact.name}

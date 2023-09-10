@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  ImageSourcePropType,
   ImageStyle,
   StyleProp,
   Text,
   TextStyle,
   TouchableOpacity,
   ViewStyle,
-  Image,
 } from 'react-native';
+import SharedImage, {IconPath} from '../images/SharedImage';
 
 interface SharedButtonProps {
   title?: string;
@@ -16,20 +15,18 @@ interface SharedButtonProps {
   style: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 
-  imageSource?: ImageSourcePropType;
-  imageStyle?: StyleProp<ImageStyle>;
+  iconPath?: IconPath;
+  iconStyle?: StyleProp<ImageStyle>;
 
   onPress: () => void;
 }
 
 const SharedButton: React.FC<SharedButtonProps> = props => {
-  const {title, style, textStyle, imageSource, imageStyle, onPress} = props;
+  const {title, style, textStyle, iconPath, iconStyle, onPress} = props;
 
   return (
     <TouchableOpacity style={style} onPress={onPress}>
-      {imageSource && (
-        <Image resizeMode="contain" source={imageSource} style={imageStyle}/>
-      )}
+      {iconPath && <SharedImage path={iconPath} style={iconStyle} />}
       {title && <Text style={textStyle}>{title}</Text>}
     </TouchableOpacity>
   );
