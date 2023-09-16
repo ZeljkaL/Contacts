@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SharedButton from './SharedButton';
 import SharedImage from '../images/SharedImage';
@@ -8,12 +8,13 @@ import {colors} from '../../resources/Colors';
 
 interface SharedSearchButtonProps {
   value: string;
+  resetSearch: boolean;
 
   onSearch: (value: string) => void;
 }
 
 const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
-  const {value, onSearch} = props;
+  const {value, resetSearch, onSearch} = props;
 
   const [focus, setFocus] = useState<boolean>(false);
 
@@ -21,6 +22,22 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
     setFocus(false);
     onSearch('');
   }, [onSearch]);
+
+  const onSearchChange = useCallback(
+    (searchValue: string) => {
+      setFocus(true);
+      onSearch(searchValue);
+    },
+    [onSearch],
+  );
+
+  useEffect(() => {
+    if (!resetSearch) {
+      return;
+    }
+
+    onClearText();
+  }, [resetSearch, onClearText]);
 
   return (
     <View style={[styles.main, focus && styles.focusStyle]}>
@@ -32,7 +49,7 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
         value={value}
         placeholderTextColor={colors.lighterGreen}
         placeholder="Search"
-        onChange={onSearch}
+        onChange={onSearchChange}
         onFocus={setFocus}
       />
 
@@ -48,15 +65,14 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '70%',
+    width: '100%',
     borderRadius: 20,
     height: 40,
     backgroundColor: colors.mediumGray,
-    marginTop: 20,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
 
   focusStyle: {
@@ -91,7 +107,7 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 11,
     color: colors.darkGray,
   },
 });

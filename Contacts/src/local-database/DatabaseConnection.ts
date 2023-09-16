@@ -24,7 +24,7 @@ export class DatabaseConnection {
       type: 'react-native',
       database: 'test',
       location: 'default',
-      logging: ['error', 'query', 'schema'],
+      // logging: ['error', 'query', 'schema'],
       synchronize: true,
       entities: [Contact],
     });

@@ -33,7 +33,7 @@ export class Contact {
       return;
     }
 
-    await DatabaseConnection.instance.contactRepository.upsert(contact, ['id']);
+    await DatabaseConnection.instance.contactRepository.save(contact);
   }
 
   static async find(name?: string): Promise<Contact[]> {
@@ -44,6 +44,9 @@ export class Contact {
     return await DatabaseConnection.instance.contactRepository.find({
       where: {
         ...(name && {name: ILike(`%${name}%`)}),
+      },
+      order: {
+        name: 'ASC',
       },
     });
   }

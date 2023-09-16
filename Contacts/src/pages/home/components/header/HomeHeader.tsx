@@ -5,6 +5,8 @@ import SharedButton from '../../../../shared-components/buttons/SharedButton';
 import SharedSearchButton from '../../../../shared-components/buttons/SharedSearchButton';
 
 interface HomeHeaderProps {
+  resetSearch: boolean;
+
   onAdd: () => void;
   onSearch: (value?: string) => void;
 }
@@ -24,12 +26,16 @@ const HomeHeader: React.FC<HomeHeaderProps> = props => {
 
   return (
     <>
-      <SharedSearchButton value={searchValue} onSearch={onSearchInput} />
       <SharedButton
         title={'+'}
         style={styles.button}
         textStyle={styles.buttonText}
         onPress={onAdd}
+      />
+      <SharedSearchButton
+        resetSearch={props.resetSearch}
+        value={searchValue}
+        onSearch={onSearchInput}
       />
     </>
   );
@@ -42,11 +48,12 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
 
   buttonText: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 30,
     color: colors.lightGreen,
   },
 });

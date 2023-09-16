@@ -13,11 +13,10 @@ const SharedHeader: React.FC<SharedHeaderProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     marginVertical: 10,
-    height: 60,
+    height: 90,
     paddingHorizontal: 20,
   },
 });

@@ -35,11 +35,11 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
       return;
     }
 
+    // Regular expression allows only digits (0-9)
     if (!Constants.REGEX.test(inputText)) {
       return;
     }
 
-    // Regular expression allows only digits (0-9)
     onChange(inputText);
   };
 

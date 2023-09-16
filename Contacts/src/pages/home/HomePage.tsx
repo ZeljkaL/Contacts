@@ -1,17 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import HomeHeader from './components/header/HomeHeader';
 import ContactList from './components/contact-list/ContactList';
-import CreateContactView from './components/create-contact/CreateContactView';
 import {Page, PageProps} from '../../stack/StackConfig';
 import SharedHeader from '../../shared-components/header/SharedHeader';
 import SharedModal from '../../shared-components/modals/SharedModal';
 import {Contact} from '../../local-database/entities/Contact';
+import ContactEntryView from '../../shared-components/modals/contact-entry/ContactEntryView';
 
 const HomePage: React.FC<PageProps<Page.Home>> = props => {
   const {navigation} = props;
 
   const [contacts, setContacts] = useState<Contact[]>([]);
+  const [resetSearch, setResetSearch] = useState<boolean>(false);
   const [createContactVisible, setCreateContactVisible] =
     useState<boolean>(false);
 
@@ -19,12 +21,15 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
     setContacts(await Contact.find(value));
   }, []);
 
-  useEffect(() => {
-    findContacts();
-  }, [findContacts]);
+  useFocusEffect(
+    useCallback(() => {
+      findContacts();
+    }, [findContacts]),
+  );
 
   const onContactPress = useCallback(
     (contact: Contact) => {
+      setResetSearch(true);
       navigation.navigate(Page.Details, {
         contact: contact,
       });
@@ -46,6 +51,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
       <SharedHeader
         element={
           <HomeHeader
+            resetSearch={resetSearch || createContactVisible}
             onSearch={findContacts}
             onAdd={() => setCreateContactVisible(true)}
           />
@@ -56,7 +62,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
       {createContactVisible && (
         <SharedModal
           element={
-            <CreateContactView
+            <ContactEntryView
               onSave={onSaveContact}
               onCancel={() => setCreateContactVisible(false)}
             />

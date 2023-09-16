@@ -8,18 +8,19 @@ interface PhoneNumberFieldProps {
   label: string;
   placeholder: string;
   invalid: boolean;
+  value: string;
 
-  onChange: (value: string, valid: boolean) => void;
+  onChange: (value: string) => void;
 }
 
 const PhoneNumberField: React.FC<PhoneNumberFieldProps> = props => {
-  const {invalid, onChange} = props;
+  const {onChange} = props;
 
   const phoneInputRef = useRef<ReactNativePhoneInput>(null);
 
   const onChangePhoneNumber = useCallback(
     (value: string) => {
-      onChange(value, phoneInputRef.current.isValidNumber());
+      onChange(phoneInputRef.current.isValidNumber() ? value : undefined);
     },
     [onChange],
   );
@@ -30,8 +31,8 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = props => {
       <PhoneInput
         ref={ref => (phoneInputRef.current = ref)}
         autoFormat
-        style={[styles.inputContainer, invalid && styles.invalidInput]}
-        initialValue=""
+        style={[styles.inputContainer, props.invalid && styles.invalidInput]}
+        initialValue={props.value}
         textProps={{
           placeholder: props.placeholder,
         }}

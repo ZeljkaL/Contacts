@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import DetailButtonPanel from './components/DetailButtonPanel';
 import DetailInfoPanel from './components/info/DetailInfoPanel';
@@ -8,14 +8,24 @@ import {PageProps, Page} from '../../stack/StackConfig';
 import SharedImage from '../../shared-components/images/SharedImage';
 import SharedHeader from '../../shared-components/header/SharedHeader';
 import SharedButton from '../../shared-components/buttons/SharedButton';
+import SharedModal from '../../shared-components/modals/SharedModal';
+import {Contact} from '../../local-database/entities/Contact';
+import ContactEntryView from '../../shared-components/modals/contact-entry/ContactEntryView';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const {route} = props;
-  const contact = route.params.contact;
+
+  const [contact, setContact] = useState<Contact>(route.params.contact);
+  const [editContactVisible, setEditContactVisible] = useState<boolean>(false);
 
   const onAction = () => {
     return;
   };
+
+  const onSaveContact = useCallback(async (modifiedContact: Contact) => {
+    setContact(modifiedContact);
+    await Contact.save(modifiedContact);
+  }, []);
 
   return (
     <View style={styles.main}>
@@ -25,7 +35,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
             style={styles.editButton}
             iconPath={assets.edit}
             iconStyle={styles.editIcon}
-            onPress={onAction}
+            onPress={() => setEditContactVisible(true)}
           />
         }
       />
@@ -44,6 +54,18 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
           <DetailInfoPanel contact={contact} />
         </View>
       </View>
+
+      {editContactVisible && (
+        <SharedModal
+          element={
+            <ContactEntryView
+              savedContact={contact}
+              onSave={onSaveContact}
+              onCancel={() => setEditContactVisible(false)}
+            />
+          }
+        />
+      )}
     </View>
   );
 };
@@ -60,9 +82,6 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'flex-start',
-    position: 'absolute',
-    right: 20,
   },
 
   editIcon: {
