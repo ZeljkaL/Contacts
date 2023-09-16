@@ -12,6 +12,7 @@ const SharedModal: React.FC<SharedModalProps> = props => {
   return (
     <View style={styles.modal}>
       <View style={styles.overlay} />
+
       {element}
     </View>
   );
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     position: 'absolute',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   overlay: {

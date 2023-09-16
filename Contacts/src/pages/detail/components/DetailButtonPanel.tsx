@@ -3,11 +3,16 @@ import {StyleSheet, View} from 'react-native';
 import {colors} from '../../../resources/Colors';
 import {assets} from '../../../resources/Assets';
 import SharedButton from '../../../shared-components/buttons/SharedButton';
+import SharedDropdown, {
+  IDropdownItem,
+} from '../../../shared-components/dropdowns/SharedDropdown';
 
 interface DetailButtonPanelProps {
+  data: IDropdownItem[];
+
   onCall: () => void;
   onMessage: () => void;
-  onShare: () => void;
+  onSelectApp: (item: IDropdownItem) => void;
 }
 
 const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
@@ -27,11 +32,11 @@ const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
         onPress={props.onMessage}
       />
 
-      <SharedButton
-        style={styles.button}
-        iconPath={assets.videoCall}
-        iconStyle={styles.buttonIcon}
-        onPress={props.onShare}
+      <SharedDropdown
+        data={props.data}
+        customButtonIconPath={assets.videoCall}
+        customButtonIconStyle={[styles.buttonIcon, styles.videoIcon]}
+        onSelect={props.onSelectApp}
       />
     </View>
   );
@@ -69,6 +74,10 @@ const styles = StyleSheet.create({
 
   messageButton: {
     backgroundColor: colors.blue,
+  },
+
+  videoIcon: {
+    marginLeft: 5,
   },
 });
 

@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import uuid from 'react-native-uuid';
 import ImagePicker from 'react-native-image-crop-picker';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {assets} from '../../../resources/Assets';
 import {colors} from '../../../resources/Colors';
 import {IContact} from '../../../types/IContact';
@@ -97,64 +98,74 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
   }, []);
 
   return (
-    <View style={styles.main}>
-      <Text style={styles.title}>
-        {savedContact ? Constants.EDIT_TITLE : Constants.TITLE}
-      </Text>
-      <SharedButton
-        iconPath={
-          contact && contact.imagePath ? contact.imagePath : assets.uploadImage
-        }
-        iconStyle={
-          contact && contact.imagePath ? styles.contactImage : styles.icon
-        }
-        style={styles.iconButton}
-        onPress={onUploadImage}
-      />
-      <TextField
-        value={contact?.name}
-        numeric={false}
-        label={Constants.NAME_LABEL}
-        placeholder={Constants.NAME_PLACEHOLDER}
-        invalid={isNameInvalidOnSave}
-        onChange={onNameInputChange}
-      />
-      <PhoneNumberField
-        label={Constants.NUMBER_LABEL}
-        placeholder={Constants.NUMBER_PLACEHOLDER}
-        invalid={isPhoneInvalidOnSave}
-        value={savedContact?.phoneNumber ?? ''}
-        onChange={onPhoneInputChange}
-      />
-      <View style={styles.buttons}>
+    <KeyboardAwareScrollView enableOnAndroid style={styles.keyboard}>
+      <View style={styles.main}>
+        <Text style={styles.title}>
+          {savedContact ? Constants.EDIT_TITLE : Constants.TITLE}
+        </Text>
         <SharedButton
-          title={'Cancel'}
-          style={[styles.button, styles.cancelButton]}
-          textStyle={styles.buttonText}
-          onPress={onCancel}
+          iconPath={
+            contact && contact.imagePath
+              ? contact.imagePath
+              : assets.uploadImage
+          }
+          iconStyle={
+            contact && contact.imagePath ? styles.contactImage : styles.icon
+          }
+          style={styles.iconButton}
+          onPress={onUploadImage}
         />
-        <SharedButton
-          title={'Save'}
-          style={[styles.button, styles.saveButton]}
-          textStyle={styles.buttonText}
-          onPress={onSaveContact}
+        <TextField
+          value={contact?.name}
+          numeric={false}
+          label={Constants.NAME_LABEL}
+          placeholder={Constants.NAME_PLACEHOLDER}
+          invalid={isNameInvalidOnSave}
+          onChange={onNameInputChange}
         />
+        <PhoneNumberField
+          label={Constants.NUMBER_LABEL}
+          placeholder={Constants.NUMBER_PLACEHOLDER}
+          invalid={isPhoneInvalidOnSave}
+          value={savedContact?.phoneNumber ?? ''}
+          onChange={onPhoneInputChange}
+        />
+        <View style={styles.buttons}>
+          <SharedButton
+            title={'Cancel'}
+            style={[styles.button, styles.cancelButton]}
+            textStyle={styles.buttonText}
+            onPress={onCancel}
+          />
+          <SharedButton
+            title={'Save'}
+            style={[styles.button, styles.saveButton]}
+            textStyle={styles.buttonText}
+            onPress={onSaveContact}
+          />
+        </View>
+        {/* </View> */}
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   main: {
-    alignSelf: 'center',
+    width: '100%',
+    height: 420,
     backgroundColor: colors.mediumGray,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
-    width: '100%',
-    height: '80%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    top: 300,
+  },
+
+  keyboard: {
+    width: '100%',
+    height: '100%',
   },
 
   title: {

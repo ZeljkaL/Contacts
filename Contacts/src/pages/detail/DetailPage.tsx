@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {StyleSheet, View, Linking} from 'react-native';
 import DetailButtonPanel from './components/DetailButtonPanel';
 import DetailInfoPanel from './components/info/DetailInfoPanel';
 import {colors} from '../../resources/Colors';
@@ -11,21 +11,69 @@ import SharedButton from '../../shared-components/buttons/SharedButton';
 import SharedModal from '../../shared-components/modals/SharedModal';
 import {Contact} from '../../local-database/entities/Contact';
 import ContactEntryView from '../../shared-components/modals/contact-entry/ContactEntryView';
+import {IDropdownItem} from '../../shared-components/dropdowns/SharedDropdown';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const {route} = props;
 
   const [contact, setContact] = useState<Contact>(route.params.contact);
   const [editContactVisible, setEditContactVisible] = useState<boolean>(false);
+  const [dropdownList, setDropdownList] = useState<IDropdownItem[]>([]);
 
-  const onAction = () => {
-    return;
-  };
+  const fetchDropdownList = useCallback(async (): Promise<IDropdownItem[]> => {
+    const formattedPhoneNumber = contact.phoneNumber.replace(/[\s-]/g, '');
+
+    const viberLink = `viber://contact?number=${formattedPhoneNumber}`;
+    const whatsappLink = `whatsapp://send?phone=${formattedPhoneNumber}`;
+    const skypeLink = `skype:${formattedPhoneNumber}?call`;
+
+    return [
+      {
+        name: 'Viber',
+        icon: assets.viber,
+        link: viberLink,
+        disabled: !(await Linking.canOpenURL(viberLink)),
+      },
+      {
+        name: 'WhatsApp',
+        icon: assets.whatsapp,
+        link: whatsappLink,
+        disabled: !(await Linking.canOpenURL(whatsappLink)),
+      },
+      {
+        name: 'Skype',
+        icon: assets.skype,
+        link: skypeLink,
+        disabled: !(await Linking.canOpenURL(skypeLink)),
+      },
+    ];
+  }, [contact]);
+
+  useEffect(() => {
+    fetchDropdownList().then(response => {
+      setDropdownList(response);
+    });
+  }, [fetchDropdownList]);
 
   const onSaveContact = useCallback(async (modifiedContact: Contact) => {
     setContact(modifiedContact);
     await Contact.save(modifiedContact);
   }, []);
+
+  const onCall = useCallback(() => {
+    contact.onCall();
+  }, [contact]);
+
+  const onMessage = useCallback(() => {
+    contact.onMessage();
+  }, [contact]);
+
+  const onSelectApp = useCallback(
+    (item: IDropdownItem) => {
+      contact.openApp(item.link);
+    },
+    [contact],
+  );
 
   return (
     <View style={styles.main}>
@@ -47,9 +95,10 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
         />
         <View style={styles.panel}>
           <DetailButtonPanel
-            onCall={onAction}
-            onMessage={onAction}
-            onShare={onAction}
+            data={dropdownList}
+            onCall={onCall}
+            onMessage={onMessage}
+            onSelectApp={onSelectApp}
           />
           <DetailInfoPanel contact={contact} />
         </View>

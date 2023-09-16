@@ -1,6 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm/browser';
 import {DatabaseConnection} from '../DatabaseConnection';
 import {ILike} from 'typeorm';
+import {Linking} from 'react-native';
 
 @Entity({name: 'Contact'})
 export class Contact {
@@ -49,5 +50,19 @@ export class Contact {
         name: 'ASC',
       },
     });
+  }
+
+  onCall?() {
+    const formattedNumber = this.phoneNumber.replace(/[\s-]/g, '');
+    Linking.openURL(`tel:${formattedNumber}`);
+  }
+
+  onMessage?() {
+    const formattedNumber = this.phoneNumber.replace(/[\s-]/g, '');
+    Linking.openURL(`sms:${formattedNumber}`);
+  }
+
+  openApp?(link: string) {
+    Linking.openURL(link)
   }
 }

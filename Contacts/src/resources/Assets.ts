@@ -6,4 +6,7 @@ export const assets = {
   videoCall: require('../assets/video_call.png'),
   inbox: require('../assets/inbox.png'),
   contact: require('../assets/contact.png'),
+  viber: require('../assets/viber.png'),
+  whatsapp: require('../assets/whatsapp.png'),
+  skype: require('../assets/skype.png'),
 };
