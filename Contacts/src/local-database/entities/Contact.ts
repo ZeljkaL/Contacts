@@ -1,7 +1,6 @@
+import {ILike} from 'typeorm';
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm/browser';
 import {DatabaseConnection} from '../DatabaseConnection';
-import {ILike} from 'typeorm';
-import {Linking} from 'react-native';
 
 @Entity({name: 'Contact'})
 export class Contact {
@@ -37,6 +36,14 @@ export class Contact {
     await DatabaseConnection.instance.contactRepository.save(contact);
   }
 
+  static async delete(contact: Contact) {
+    if (!DatabaseConnection.instance.contactRepositoryValid) {
+      return;
+    }
+
+    await DatabaseConnection.instance.contactRepository.remove(contact);
+  }
+
   static async find(name?: string): Promise<Contact[]> {
     if (!DatabaseConnection.instance.contactRepositoryValid) {
       return;
@@ -50,19 +57,5 @@ export class Contact {
         name: 'ASC',
       },
     });
-  }
-
-  onCall?() {
-    const formattedNumber = this.phoneNumber.replace(/[\s-]/g, '');
-    Linking.openURL(`tel:${formattedNumber}`);
-  }
-
-  onMessage?() {
-    const formattedNumber = this.phoneNumber.replace(/[\s-]/g, '');
-    Linking.openURL(`sms:${formattedNumber}`);
-  }
-
-  openApp?(link: string) {
-    Linking.openURL(link)
   }
 }

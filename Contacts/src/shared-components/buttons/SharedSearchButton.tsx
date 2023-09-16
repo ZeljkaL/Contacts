@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SharedButton from './SharedButton';
 import SharedImage from '../images/SharedImage';
@@ -8,13 +8,12 @@ import {colors} from '../../resources/Colors';
 
 interface SharedSearchButtonProps {
   value: string;
-  resetSearch: boolean;
 
   onSearch: (value: string) => void;
 }
 
 const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
-  const {value, resetSearch, onSearch} = props;
+  const {value, onSearch} = props;
 
   const [focus, setFocus] = useState<boolean>(false);
 
@@ -30,14 +29,6 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
     },
     [onSearch],
   );
-
-  useEffect(() => {
-    if (!resetSearch) {
-      return;
-    }
-
-    onClearText();
-  }, [resetSearch, onClearText]);
 
   return (
     <View style={[styles.main, focus && styles.focusStyle]}>

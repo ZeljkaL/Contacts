@@ -52,7 +52,10 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
   }, [savedContact]);
 
   const onUploadImage = useCallback(async () => {
-    const image = await ImagePicker.openPicker({multiple: false});
+    const image = await ImagePicker.openPicker({
+      multiple: false,
+      mediaType: 'photo',
+    });
 
     setContact(prevState => ({
       ...prevState,
@@ -144,7 +147,6 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
             onPress={onSaveContact}
           />
         </View>
-        {/* </View> */}
       </View>
     </KeyboardAwareScrollView>
   );

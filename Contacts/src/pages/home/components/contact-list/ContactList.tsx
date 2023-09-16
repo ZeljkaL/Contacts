@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
+import uuid from 'react-native-uuid';
 import ContactItem from './item/ContactItem';
 import {Contact} from '../../../../local-database/entities/Contact';
 
@@ -7,20 +8,27 @@ interface ContactListProps {
   contacts: Contact[];
 
   onContactPress: (contact: Contact) => void;
+  onDeleteContact: (contact: Contact) => void;
 }
 
 const ContactList: React.FC<ContactListProps> = props => {
-  const {contacts, onContactPress} = props;
+  const {contacts, onContactPress, onDeleteContact} = props;
 
-  const keyExtractor = useCallback((contact: Contact): string => {
-    return contact.id;
+  const keyExtractor = useCallback((_: Contact): string => {
+    return uuid.v4().toString();
   }, []);
 
   const renderItem = useCallback(
     (contact: Contact): JSX.Element => {
-      return <ContactItem contact={contact} onPress={onContactPress} />;
+      return (
+        <ContactItem
+          contact={contact}
+          onPress={onContactPress}
+          onDelete={onDeleteContact}
+        />
+      );
     },
-    [onContactPress],
+    [onContactPress, onDeleteContact],
   );
 
   return (
