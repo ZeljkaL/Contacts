@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm/browser';
 import {DatabaseConnection} from '../DatabaseConnection';
+import {ILike} from 'typeorm';
 
 @Entity({name: 'Contact'})
 export class Contact {
@@ -32,14 +33,18 @@ export class Contact {
       return;
     }
 
-    await DatabaseConnection.instance.contactRepository.save(contact);
+    await DatabaseConnection.instance.contactRepository.upsert(contact, ['id']);
   }
 
-  static async find(): Promise<Contact[]> {
+  static async find(name?: string): Promise<Contact[]> {
     if (!DatabaseConnection.instance.contactRepositoryValid) {
       return;
     }
 
-    return await DatabaseConnection.instance.contactRepository.find();
+    return await DatabaseConnection.instance.contactRepository.find({
+      where: {
+        ...(name && {name: ILike(`%${name}%`)}),
+      },
+    });
   }
 }

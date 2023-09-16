@@ -1,12 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import {StyleSheet} from 'react-native';
+import {colors} from '../../../../resources/Colors';
 import SharedButton from '../../../../shared-components/buttons/SharedButton';
-import {colors} from '../../../../utils/Colors';
 import SharedSearchButton from '../../../../shared-components/buttons/SharedSearchButton';
 
 interface HomeHeaderProps {
   onAdd: () => void;
-  onSearch: (value: string) => void;
+  onSearch: (value?: string) => void;
 }
 
 const HomeHeader: React.FC<HomeHeaderProps> = props => {

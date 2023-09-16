@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import SharedTextInput from '../../../../../shared-components/text-input-fields/SharedTextInput';
-import {colors} from '../../../../../utils/Colors';
+import SharedTextInput from './SharedTextInput';
+import {colors} from '../../../resources/Colors';
 
 interface TextFieldProps {
   label: string;
   value?: string;
   placeholder: string;
   numeric: boolean;
+  invalid?: boolean;
 
   onChange: (value: string) => void;
 }
@@ -19,7 +20,7 @@ const TextField: React.FC<TextFieldProps> = props => {
       <SharedTextInput
         value={props.value}
         placeholder={props.placeholder}
-        style={styles.inputContainer}
+        style={[styles.inputContainer, props.invalid && styles.invalidInput]}
         onChange={props.onChange}
         numeric={props.numeric}
       />
@@ -48,6 +49,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  invalidInput: {
+    borderColor: 'red',
+    borderWidth: 2,
   },
 });
 

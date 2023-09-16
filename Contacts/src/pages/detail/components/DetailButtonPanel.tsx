@@ -1,10 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {colors} from '../../../resources/Colors';
+import {assets} from '../../../resources/Assets';
 import SharedButton from '../../../shared-components/buttons/SharedButton';
-import {colors} from '../../../utils/Colors';
-
-const callPath = '../../../assets/call.png';
-const msgPath = '../../../assets/mess.png';
 
 interface DetailButtonPanelProps {
   onCall: () => void;
@@ -17,21 +15,21 @@ const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
     <View style={styles.main}>
       <SharedButton
         style={[styles.button, styles.callButton]}
-        iconPath={require(callPath)}
+        iconPath={assets.call}
         iconStyle={styles.buttonIcon}
         onPress={props.onCall}
       />
 
       <SharedButton
         style={[styles.button, styles.messageButton]}
-        iconPath={require(msgPath)}
+        iconPath={assets.inbox}
         iconStyle={styles.buttonIcon}
         onPress={props.onMessage}
       />
 
       <SharedButton
         style={styles.button}
-        iconPath={require(callPath)}
+        iconPath={assets.videoCall}
         iconStyle={styles.buttonIcon}
         onPress={props.onShare}
       />

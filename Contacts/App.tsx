@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Page, ScreenOptions, Stack, StackTheme} from './src/stack/StackConfig';
-import {colors} from './src/utils/Colors';
+import {colors} from './src/resources/Colors';
 import HomePage from './src/pages/home/HomePage';
 import DetailPage from './src/pages/detail/DetailPage';
 import {DatabaseConnection} from './src/local-database/DatabaseConnection';
+import {Page, ScreenOptions, Stack, StackTheme} from './src/stack/StackConfig';
 
 const App = () => {
   const [initialized, setInitialized] = useState<boolean>(false);

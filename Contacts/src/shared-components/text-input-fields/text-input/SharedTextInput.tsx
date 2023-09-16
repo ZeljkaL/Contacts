@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleProp, TextInput, ViewStyle} from 'react-native';
-import {colors} from '../../utils/Colors';
+import {colors} from '../../../resources/Colors';
 
 interface SharedTextInputProps {
   value?: string;

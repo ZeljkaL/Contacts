@@ -2,20 +2,20 @@ import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import uuid from 'react-native-uuid';
 import ImagePicker from 'react-native-image-crop-picker';
-import SharedButton from '../../../../shared-components/buttons/SharedButton';
-import {colors} from '../../../../utils/Colors';
-import TextField from './components/TextField';
+import {assets} from '../../../../resources/Assets';
+import {colors} from '../../../../resources/Colors';
 import {IContact} from '../../../../types/IContact';
 import {Contact} from '../../../../local-database/entities/Contact';
-
-const imageIcon = '../../../../assets/imIcon.png';
+import SharedButton from '../../../../shared-components/buttons/SharedButton';
+import TextField from '../../../../shared-components/text-input-fields/text-input/TextField';
+import PhoneNumberField from '../../../../shared-components/text-input-fields/phone-input/PhoneNumberField';
 
 const Constants = {
   TITLE: 'Create New Contact',
-  NAME_LABEL: 'Name',
+  NAME_LABEL: 'Name*',
   NAME_PLACEHOLDER: 'Enter name',
 
-  NUMBER_LABEL: 'Number',
+  NUMBER_LABEL: 'Number*',
   NUMBER_PLACEHOLDER: 'Enter number',
 };
 
@@ -28,25 +28,28 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
   const {onSave, onCancel} = props;
 
   const [contact, setContact] = useState<IContact | null>(null);
+  const [isNameInvalidOnSave, setIsNameInvalidOnSave] =
+    useState<boolean>(false);
+  const [isPhoneInvalidOnSave, setIsPhoneInvalidOnSave] =
+    useState<boolean>(false);
 
-  const onUploadImage = useCallback(() => {
-    ImagePicker.openPicker({
-      multiple: false,
-    }).then(image => {
-      setContact(prevState => ({
-        ...prevState,
-        imagePath: image.sourceURL,
-      }));
-    });
+  const onUploadImage = useCallback(async () => {
+    const image = await ImagePicker.openPicker({multiple: false});
+
+    setContact(prevState => ({
+      ...prevState,
+      imagePath: image.sourceURL,
+    }));
   }, []);
 
-  const onReset = useCallback(() => {
-    setContact(null);
-    onCancel();
-  }, [onCancel]);
-
   const onSaveContact = useCallback(() => {
-    if (!contact || !contact.name || !contact.number) {
+    if (!contact || !contact.name) {
+      setIsNameInvalidOnSave(true);
+      return;
+    }
+
+    if (!contact.number) {
+      setIsPhoneInvalidOnSave(true);
       return;
     }
 
@@ -56,15 +59,32 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
       phoneNumber: contact.number,
       imagePath: contact.imagePath,
     });
-    onReset();
-  }, [contact, onSave, onReset]);
+
+    onCancel();
+  }, [contact, onSave, onCancel]);
+
+  const onNameInputChange = useCallback((updatedName: string) => {
+    setIsNameInvalidOnSave(false);
+    setContact(prevState => ({
+      ...prevState,
+      name: updatedName,
+    }));
+  }, []);
+
+  const onPhoneInputChange = useCallback((value: string, valid: boolean) => {
+    setIsPhoneInvalidOnSave(false);
+    setContact(prevState => ({
+      ...prevState,
+      number: valid && value,
+    }));
+  }, []);
 
   return (
     <View style={styles.main}>
       <Text style={styles.title}>{Constants.TITLE}</Text>
       <SharedButton
         iconPath={
-          contact && contact.imagePath ? contact.imagePath : require(imageIcon)
+          contact && contact.imagePath ? contact.imagePath : assets.uploadImage
         }
         iconStyle={
           contact && contact.imagePath ? styles.contactImage : styles.icon
@@ -77,33 +97,22 @@ const CreateContactView: React.FC<CreateContactViewProps> = props => {
         numeric={false}
         label={Constants.NAME_LABEL}
         placeholder={Constants.NAME_PLACEHOLDER}
-        onChange={value =>
-          setContact(prevState => ({
-            ...prevState,
-            name: value as string,
-          }))
-        }
+        invalid={isNameInvalidOnSave}
+        onChange={onNameInputChange}
       />
-      <TextField
-        value={contact?.number}
-        numeric={true}
+      <PhoneNumberField
         label={Constants.NUMBER_LABEL}
         placeholder={Constants.NUMBER_PLACEHOLDER}
-        onChange={value =>
-          setContact(prevState => ({
-            ...prevState,
-            number: value as string,
-          }))
-        }
+        invalid={isPhoneInvalidOnSave}
+        onChange={onPhoneInputChange}
       />
       <View style={styles.buttons}>
         <SharedButton
           title={'Cancel'}
           style={[styles.button, styles.cancelButton]}
           textStyle={styles.buttonText}
-          onPress={onReset}
+          onPress={onCancel}
         />
-
         <SharedButton
           title={'Save'}
           style={[styles.button, styles.saveButton]}
@@ -189,13 +198,12 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     borderWidth: 2,
-    borderColor: colors.black,
+    borderColor: colors.lightGray,
     borderRadius: 10,
-    width: '90%',
-    height: 50,
+    height: 40,
     marginVertical: 5,
     paddingHorizontal: 10,
-    backgroundColor: colors.white,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },

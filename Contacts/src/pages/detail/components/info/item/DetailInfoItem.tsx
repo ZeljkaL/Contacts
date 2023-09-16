@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {colors} from '../../../../../utils/Colors';
+import {colors} from '../../../../../resources/Colors';
 
 interface DetailInfoItemProps {
   label: string;
@@ -12,9 +12,8 @@ const DetailInfoItem: React.FC<DetailInfoItemProps> = props => {
 
   return (
     <View style={styles.main}>
-      <Text style={styles.label}>
-        {label}: <Text style={styles.value}>{value}</Text>
-      </Text>
+      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.value}>{value}</Text>
     </View>
   );
 };
@@ -25,19 +24,20 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     borderBottomColor: colors.lighterGreen,
     borderBottomWidth: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 
   label: {
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: colors.lighterGreen,
     fontSize: 16,
     fontWeight: '500',
-    width: '100%',
-    textAlign: 'justify',
   },
 
   value: {
+    marginLeft: 10,
+    fontSize: 20,
     color: colors.white,
   },
 });

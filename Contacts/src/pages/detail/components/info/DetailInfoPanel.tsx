@@ -13,8 +13,7 @@ const DetailInfoPanel: React.FC<DetailInfoPanelProps> = props => {
   return (
     <View style={styles.main}>
       <DetailInfoItem label="Name" value={contact.name} />
-      <DetailInfoItem label="Phone Number" value={contact.phoneNumber} />
-      <DetailInfoItem label="Address" value="23 Street LA" />
+      <DetailInfoItem label="Number" value={contact.phoneNumber} />
     </View>
   );
 };

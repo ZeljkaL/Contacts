@@ -1,17 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {colors} from '../../utils/Colors';
+import {colors} from '../../resources/Colors';
 
 interface SharedModalProps {
-  visibility: boolean;
   element: JSX.Element;
 }
 
 const SharedModal: React.FC<SharedModalProps> = props => {
-  const {visibility, element} = props;
+  const {element} = props;
 
   return (
-    <View style={[styles.modal, !visibility && styles.hidden]}>
+    <View style={styles.modal}>
       <View style={styles.overlay} />
       {element}
     </View>
@@ -24,10 +23,6 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     justifyContent: 'flex-end',
-  },
-
-  hidden: {
-    display: 'none',
   },
 
   overlay: {

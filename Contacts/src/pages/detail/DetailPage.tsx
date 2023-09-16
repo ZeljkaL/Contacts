@@ -1,19 +1,16 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {colors} from '../../utils/Colors';
-import {PageProps, Page} from '../../stack/StackConfig';
-import SharedButton from '../../shared-components/buttons/SharedButton';
-import SharedHeader from '../../shared-components/header/SharedHeader';
 import DetailButtonPanel from './components/DetailButtonPanel';
 import DetailInfoPanel from './components/info/DetailInfoPanel';
+import {colors} from '../../resources/Colors';
+import {assets} from '../../resources/Assets';
+import {PageProps, Page} from '../../stack/StackConfig';
 import SharedImage from '../../shared-components/images/SharedImage';
-
-const editPath = '../../assets/edit.png';
-const defaultContactPath = '../../assets/contact.png';
+import SharedHeader from '../../shared-components/header/SharedHeader';
+import SharedButton from '../../shared-components/buttons/SharedButton';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const {route} = props;
-
   const contact = route.params.contact;
 
   const onAction = () => {
@@ -26,7 +23,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
         element={
           <SharedButton
             style={styles.editButton}
-            iconPath={require(editPath)}
+            iconPath={assets.edit}
             iconStyle={styles.editIcon}
             onPress={onAction}
           />
@@ -35,7 +32,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
 
       <View style={styles.detailContainer}>
         <SharedImage
-          path={contact.imagePath ?? require(defaultContactPath)}
+          path={contact.imagePath ?? assets.contact}
           style={styles.contactIcon}
         />
         <View style={styles.panel}>

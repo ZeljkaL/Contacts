@@ -36,8 +36,6 @@ export class DatabaseConnection {
       return;
     }
 
-    console.log('Connection to local database established.');
-
     this.contactRepository = this.connection.getRepository(Contact);
   }
 }
