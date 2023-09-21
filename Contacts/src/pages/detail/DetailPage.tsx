@@ -121,13 +121,14 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
+    justifyContent: 'space-between',
   },
 
   editButton: {
-    backgroundColor: '#0066ff',
-    width: 30,
+    backgroundColor: colors.darkBlue,
+    width: 35,
     borderRadius: 10,
-    height: 30,
+    height: 35,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   editIcon: {
     width: 20,
     height: 20,
-    tintColor: colors.lightGray,
+    tintColor: colors.lightBlue,
   },
 
   detailContainer: {
@@ -147,17 +148,20 @@ const styles = StyleSheet.create({
     width: 180,
     height: 180,
     borderRadius: 10,
-    borderColor: colors.lighterGreen,
+    borderColor: colors.sandBlue,
     borderWidth: 4,
+    opacity: 0.8,
+    backgroundColor: colors.lightBlue,
   },
 
   panel: {
     width: '100%',
+    height: 400,
     padding: 20,
     marginTop: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    backgroundColor: colors.mediumGray,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
 });
 

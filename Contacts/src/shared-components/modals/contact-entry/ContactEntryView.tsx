@@ -137,7 +137,7 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
           <SharedButton
             title={'Cancel'}
             style={[styles.button, styles.cancelButton]}
-            textStyle={styles.buttonText}
+            textStyle={[styles.buttonText, styles.cancelTitle]}
             onPress={onCancel}
           />
           <SharedButton
@@ -154,15 +154,15 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '100%',
-    height: 420,
-    backgroundColor: colors.mediumGray,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    width: '95%',
+    height: 450,
+    backgroundColor: colors.lightBlue,
+    borderRadius: 20,
     padding: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
-    top: 300,
+    alignSelf: 'center',
+    marginTop: 120,
   },
 
   keyboard: {
@@ -171,13 +171,13 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: 'white',
+    color: colors.sandBlue,
     fontSize: 24,
   },
 
   iconButton: {
     alignSelf: 'center',
-    borderColor: colors.lighterGreen,
+    borderColor: colors.sandBlue,
     borderRadius: 10,
     borderWidth: 2,
     width: 100,
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
   icon: {
     width: '50%',
     height: '50%',
-    tintColor: colors.white,
-    opacity: 0.3,
+    tintColor: colors.sandBlue,
+    opacity: 0.6,
   },
 
   contactImage: {
@@ -215,23 +215,27 @@ const styles = StyleSheet.create({
   },
 
   saveButton: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.sandBlue,
   },
 
   cancelButton: {
-    borderColor: colors.lightGray,
+    borderColor: colors.sandBlue,
     borderWidth: 2,
     height: 54,
   },
 
   buttonText: {
-    color: 'white',
+    color: colors.white,
     fontWeight: '600',
+  },
+
+  cancelTitle: {
+    color: colors.sandBlue,
   },
 
   inputContainer: {
     borderWidth: 2,
-    borderColor: colors.lightGray,
+    borderColor: colors.sandBlue,
     borderRadius: 10,
     height: 40,
     marginVertical: 5,

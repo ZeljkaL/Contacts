@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
   main: {
     height: 70,
     textAlignVertical: 'center',
-    borderBottomColor: colors.lighterGreen,
-    borderBottomWidth: 2,
+    borderBottomColor: colors.lightBlue,
+    borderBottomWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
   },
 
   label: {
-    color: colors.lighterGreen,
+    color: colors.lightBlue,
     fontSize: 16,
     fontWeight: '500',
   },

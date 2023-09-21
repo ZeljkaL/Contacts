@@ -34,14 +34,13 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    color: colors.white,
+    color: colors.sandBlue,
     fontWeight: '600',
-    opacity: 0.5,
   },
 
   inputContainer: {
     borderWidth: 2,
-    borderColor: colors.lightGray,
+    borderColor: colors.sandBlue,
     borderRadius: 10,
     height: 40,
     marginVertical: 5,

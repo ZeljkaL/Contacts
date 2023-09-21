@@ -38,7 +38,7 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
         numeric={false}
         style={styles.inputStyle}
         value={value}
-        placeholderTextColor={colors.lighterGreen}
+        placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
         placeholder="Search"
         onChange={onSearchChange}
         onFocus={setFocus}
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 20,
     height: 40,
-    backgroundColor: colors.mediumGray,
+    backgroundColor: colors.sandBlue,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -67,19 +67,21 @@ const styles = StyleSheet.create({
   },
 
   focusStyle: {
-    borderColor: colors.lightGreen,
+    borderColor: colors.white,
     borderWidth: 2,
   },
 
   inputStyle: {
-    width: '70%',
-    color: colors.lightGreen,
+    width: '80%',
+    color: colors.white,
+    fontSize: 18,
   },
 
   searchIcon: {
     width: 25,
     height: 25,
-    tintColor: colors.lighterGreen,
+    tintColor: colors.white,
+    opacity: 0.5,
   },
 
   button: {
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
     fontSize: 11,
-    color: colors.darkGray,
+    color: colors.mediumBlue,
   },
 });
 

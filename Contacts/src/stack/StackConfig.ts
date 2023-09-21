@@ -20,7 +20,7 @@ export const StackTheme = {
 export const ScreenOptions: NativeStackNavigationOptions = {
   animation: 'none',
   headerStyle: {
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.gray,
   },
   headerTitleStyle: {
     color: colors.white,

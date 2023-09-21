@@ -34,7 +34,7 @@ const ContactItem: React.FC<ContactItemProps> = props => {
       <View style={styles.textContainer}>
         <GradientText
           value={contact.name}
-          colors={[colors.green, colors.lighterGreen]}
+          colors={[colors.gray, colors.gray]}
         />
         <Text style={styles.buttonText}>{contact.phoneNumber}</Text>
       </View>
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
-    borderBottomColor: colors.lighterGreen,
-    borderBottomWidth: 2,
+    borderBottomColor: colors.sandBlue,
+    borderBottomWidth: 1,
     flexDirection: 'row',
     paddingLeft: 20,
   },
@@ -67,17 +67,19 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: colors.white,
-    fontWeight: '800',
-    opacity: 0.65,
+    color: colors.gray,
+    fontWeight: '600',
+    opacity: 0.6,
   },
 
   icon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 5,
-    borderColor: colors.darkerGray,
+    width: 45,
+    height: 45,
+    borderRadius: 22.5,
+    borderWidth: 3,
+    borderColor: colors.sandBlue,
+    opacity: 0.7,
+    backgroundColor: colors.lightBlue,
   },
 
   deleteButton: {
@@ -90,7 +92,8 @@ const styles = StyleSheet.create({
   deleteIcon: {
     width: 40,
     height: 40,
-    tintColor: colors.darkerGray,
+    tintColor: colors.gray,
+    opacity: 0.3,
   },
 });
 

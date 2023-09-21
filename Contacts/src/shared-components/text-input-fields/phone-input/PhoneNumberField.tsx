@@ -35,7 +35,9 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = props => {
         initialValue={props.value}
         textProps={{
           placeholder: props.placeholder,
+          placeholderTextColor: colors.mediumBlue,
         }}
+        flagStyle={styles.flagStyle}
         onPressFlag={() => {
           return;
         }}
@@ -51,14 +53,13 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    color: colors.white,
+    color: colors.sandBlue,
     fontWeight: '600',
-    opacity: 0.5,
   },
 
   inputContainer: {
     borderWidth: 2,
-    borderColor: colors.lightGray,
+    borderColor: colors.sandBlue,
     borderRadius: 10,
     height: 40,
     marginVertical: 5,
@@ -71,6 +72,10 @@ const styles = StyleSheet.create({
   invalidInput: {
     borderColor: 'red',
     borderWidth: 2,
+  },
+
+  flagStyle: {
+    backgroundColor: colors.lightBlue,
   },
 });
 

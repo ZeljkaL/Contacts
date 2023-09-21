@@ -89,12 +89,13 @@ const styles = StyleSheet.create({
 
   customizedButtonStyle: {
     width: 60,
-    backgroundColor: colors.black,
+    backgroundColor: colors.beige,
     borderRadius: 10,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 5,
+    opacity: 0.6,
   },
 
   customizedRow: {

@@ -26,7 +26,7 @@ const DialogPopup: React.FC<DialogPopupProps> = props => {
         <SharedButton
           title={'Confirm'}
           style={[styles.button, styles.saveButton]}
-          textStyle={styles.buttonText}
+          textStyle={[styles.buttonText, styles.saveTitle]}
           onPress={onConfirm}
         />
       </View>
@@ -36,18 +36,17 @@ const DialogPopup: React.FC<DialogPopupProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '100%',
-    backgroundColor: colors.mediumGray,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
+    width: '95%',
+    backgroundColor: colors.lightBlue,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
     position: 'absolute',
-    bottom: 0,
     alignItems: 'center',
   },
 
   title: {
-    color: 'white',
+    color: colors.sandBlue,
     fontSize: 24,
     textAlign: 'center',
   },
@@ -70,18 +69,22 @@ const styles = StyleSheet.create({
   },
 
   saveButton: {
-    backgroundColor: 'red',
+    backgroundColor: colors.sandBlue,
+  },
+
+  saveTitle: {
+    color: colors.white,
   },
 
   cancelButton: {
-    borderColor: colors.lightGray,
+    borderColor: colors.sandBlue,
     borderWidth: 2,
     height: 54,
   },
 
   buttonText: {
-    color: 'white',
-    fontWeight: '600',
+    color: colors.sandBlue,
+    fontWeight: '500',
   },
 });
 

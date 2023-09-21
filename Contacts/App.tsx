@@ -25,7 +25,7 @@ const App = () => {
     <NavigationContainer theme={StackTheme}>
       <SafeAreaView style={styles.main}>
         <LinearGradient
-          colors={[colors.lightGray, colors.lightGray, colors.darkGray]}
+          colors={[colors.lightBlue, colors.sandBlue]}
           style={styles.linearGradient}>
           {initialized && (
             <Stack.Navigator

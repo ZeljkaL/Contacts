@@ -65,19 +65,20 @@ const styles = StyleSheet.create({
   buttonIcon: {
     width: 30,
     height: 30,
-    tintColor: 'white',
+    tintColor: colors.beige,
   },
 
   callButton: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.sandBlue,
   },
 
   messageButton: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.green,
   },
 
   videoIcon: {
     marginLeft: 5,
+    tintColor: colors.sandBlue,
   },
 });
 

@@ -1,15 +1,15 @@
 export const colors = {
-  black: 'rgb(0, 0, 0)',
-  white: 'rgb(255, 255, 255)',
+  black: '#000000',
+  white: '#FFFFFF',
+  gray: '#212529',
 
-  darkGray: '#252C3B',
-  darkerGray: '#262D3C',
-  mediumGray: '#273445',
-  lightGray: '#2E3E52',
+  blue: '#007BFF',
+  lightBlue: '#D9E9FF',
+  mediumBlue: '#85C7FF',
+  darkBlue: '#3291FF',
+  sandBlue: '#749BC2',
 
-  green: '#11CEA5',
-  lighterGreen: '#326874',
-  lightGreen: '#05D7B2',
+  beige: '#F6F4EB',
 
-  blue: '#0066ff',
+  green: '#7C9D96',
 };
