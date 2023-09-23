@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {colors} from '../../../../resources/Colors';
 import SharedButton from '../../../../shared-components/buttons/SharedButton';
 import SharedSearchButton from '../../../../shared-components/buttons/SharedSearchButton';
+import {ResponsivenessManager} from '../../../../resources/ResponsivenessManager';
 
 interface HomeHeaderProps {
   searchValue: string;
@@ -27,12 +28,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = props => {
 
 const styles = StyleSheet.create({
   button: {
-    width: 40,
-    borderRadius: 10,
-    height: 40,
+    width: ResponsivenessManager.calculateWidth('10%'),
+    height: ResponsivenessManager.calculateHeight('4%'),
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
   },
 
   buttonText: {

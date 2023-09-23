@@ -2,6 +2,7 @@ import {StyleSheet, Text} from 'react-native';
 import React from 'react';
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
+import {ResponsivenessManager} from '../../resources/ResponsivenessManager';
 
 interface GradientTextProps {
   value: string;
@@ -24,7 +25,7 @@ const GradientText: React.FC<GradientTextProps> = props => {
 
 const styles = StyleSheet.create({
   gradient: {
-    height: 25,
+    height: ResponsivenessManager.calculateHeight('3%'),
     width: 'auto',
   },
 

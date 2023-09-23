@@ -10,6 +10,7 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {colors} from '../../resources/Colors';
 import SharedImage, {IconPath} from '../images/SharedImage';
+import {ResponsivenessManager} from '../../resources/ResponsivenessManager';
 
 export interface IDropdownItem {
   name: string;
@@ -82,41 +83,40 @@ const SharedDropdown: React.FC<SharedDrodpwnProps> = props => {
 
 const styles = StyleSheet.create({
   dropdownListStyle: {
-    width: 140,
-    marginTop: 5,
-    borderRadius: 10,
+    width: ResponsivenessManager.calculateWidth('35%'),
+    marginTop: ResponsivenessManager.calculateHeight('1%'),
+    borderRadius: ResponsivenessManager.calculateWidth('1%'),
   },
 
   customizedButtonStyle: {
-    width: 60,
-    backgroundColor: colors.beige,
-    borderRadius: 10,
+    width: ResponsivenessManager.calculateWidth('16%'),
     height: '100%',
+    borderRadius: ResponsivenessManager.calculateHeight('1%'),
+    backgroundColor: colors.beige,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
     opacity: 0.6,
   },
 
   customizedRow: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: ResponsivenessManager.calculateWidth('3%'),
+  },
+
+  customizedRowIcon: {
+    width: ResponsivenessManager.calculateWidth('8%'),
+    height: ResponsivenessManager.calculateHeight('8%'),
   },
 
   customizedRowDisabled: {
     opacity: 0.5,
   },
 
-  customizedRowIcon: {
-    width: 30,
-    height: 30,
-    marginRight: 5,
-  },
-
   customizedRowText: {
     fontSize: 16,
+    width: '70%',
   },
 });
 

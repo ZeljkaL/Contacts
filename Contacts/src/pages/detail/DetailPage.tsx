@@ -12,6 +12,7 @@ import SharedHeader from '../../shared-components/header/SharedHeader';
 import SharedButton from '../../shared-components/buttons/SharedButton';
 import {IDropdownItem} from '../../shared-components/dropdowns/SharedDropdown';
 import ContactEntryView from '../../shared-components/modals/contact-entry/ContactEntryView';
+import {ResponsivenessManager} from '../../resources/ResponsivenessManager';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const {route} = props;
@@ -125,17 +126,17 @@ const styles = StyleSheet.create({
   },
 
   editButton: {
+    width: ResponsivenessManager.calculateWidth('11%'),
+    height: ResponsivenessManager.calculateHeight('5%'),
+    borderRadius: ResponsivenessManager.calculateWidth('2%'),
     backgroundColor: colors.darkBlue,
-    width: 35,
-    borderRadius: 10,
-    height: 35,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   editIcon: {
-    width: 20,
-    height: 20,
+    width: ResponsivenessManager.calculateWidth('8%'),
+    height: ResponsivenessManager.calculateHeight('3%'),
     tintColor: colors.lightBlue,
   },
 
@@ -145,23 +146,23 @@ const styles = StyleSheet.create({
   },
 
   contactIcon: {
-    width: 180,
-    height: 180,
-    borderRadius: 10,
+    width: ResponsivenessManager.calculateWidth('50%'),
+    height: ResponsivenessManager.calculateHeight('23%'),
+    borderRadius: ResponsivenessManager.calculateWidth('2%'),
+    backgroundColor: colors.lightBlue,
     borderColor: colors.sandBlue,
     borderWidth: 4,
     opacity: 0.8,
-    backgroundColor: colors.lightBlue,
   },
 
   panel: {
     width: '100%',
-    height: 400,
-    padding: 20,
-    marginTop: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    height: ResponsivenessManager.calculateHeight('50%'),
+    padding: ResponsivenessManager.calculateWidth('7%'),
+    marginTop: ResponsivenessManager.calculateHeight('3%'),
+    borderTopLeftRadius: ResponsivenessManager.calculateHeight('3%'),
+    borderTopRightRadius: ResponsivenessManager.calculateHeight('3%'),
+    backgroundColor: colors.blackShade,
   },
 });
 

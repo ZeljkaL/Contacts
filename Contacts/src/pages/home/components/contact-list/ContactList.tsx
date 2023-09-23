@@ -3,6 +3,7 @@ import {StyleSheet, View, FlatList} from 'react-native';
 import uuid from 'react-native-uuid';
 import ContactItem from './item/ContactItem';
 import {Contact} from '../../../../local-database/entities/Contact';
+import {ResponsivenessManager} from '../../../../resources/ResponsivenessManager';
 
 interface ContactListProps {
   contacts: Contact[];
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: ResponsivenessManager.calculateHeight('4%'),
   },
 });
 

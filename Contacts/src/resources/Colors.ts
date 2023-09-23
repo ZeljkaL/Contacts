@@ -1,5 +1,6 @@
 export const colors = {
   black: '#000000',
+  blackShade: 'rgba(0, 0, 0, 0.1)',
   white: '#FFFFFF',
   gray: '#212529',
 
@@ -12,4 +13,6 @@ export const colors = {
   beige: '#F6F4EB',
 
   green: '#7C9D96',
+
+  error: 'red',
 };

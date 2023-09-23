@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {colors} from '../../../../../resources/Colors';
+import {ResponsivenessManager} from '../../../../../resources/ResponsivenessManager';
 
 interface DetailInfoItemProps {
   label: string;
@@ -20,7 +21,7 @@ const DetailInfoItem: React.FC<DetailInfoItemProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    height: 70,
+    height: ResponsivenessManager.calculateHeight('8%'),
     textAlignVertical: 'center',
     borderBottomColor: colors.lightBlue,
     borderBottomWidth: 1,
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   value: {
-    marginLeft: 10,
+    marginLeft: ResponsivenessManager.calculateWidth('2%'),
     fontSize: 20,
     color: colors.white,
   },

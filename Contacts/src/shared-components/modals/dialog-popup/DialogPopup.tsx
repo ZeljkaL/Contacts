@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {colors} from '../../../resources/Colors';
 import SharedButton from '../../buttons/SharedButton';
+import {ResponsivenessManager} from '../../../resources/ResponsivenessManager';
 
 interface DialogPopupProps {
   title: string;
@@ -36,13 +37,14 @@ const DialogPopup: React.FC<DialogPopupProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '95%',
-    backgroundColor: colors.lightBlue,
-    borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    width: ResponsivenessManager.calculateWidth('95%'),
+    borderRadius: ResponsivenessManager.calculateWidth('3%'),
+    paddingHorizontal: ResponsivenessManager.calculateWidth('3%'),
+    paddingVertical: ResponsivenessManager.calculateWidth('6%'),
     position: 'absolute',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.lightBlue,
   },
 
   title: {
@@ -55,15 +57,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%',
-    height: 50,
-    marginTop: 20,
+    width: ResponsivenessManager.calculateWidth('80%'),
+    height: ResponsivenessManager.calculateHeight('7%'),
+    marginTop: ResponsivenessManager.calculateWidth('6%'),
   },
 
   button: {
-    width: 140,
+    width: '45%',
     height: '100%',
-    borderRadius: 10,
+    borderRadius: ResponsivenessManager.calculateHeight('1%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -79,7 +81,6 @@ const styles = StyleSheet.create({
   cancelButton: {
     borderColor: colors.sandBlue,
     borderWidth: 2,
-    height: 54,
   },
 
   buttonText: {

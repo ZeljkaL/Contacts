@@ -5,6 +5,7 @@ import SharedImage from '../images/SharedImage';
 import SharedTextInput from '../text-input-fields/text-input/SharedTextInput';
 import {assets} from '../../resources/Assets';
 import {colors} from '../../resources/Colors';
+import {ResponsivenessManager} from '../../resources/ResponsivenessManager';
 
 interface SharedSearchButtonProps {
   value: string;
@@ -32,7 +33,10 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
 
   return (
     <View style={[styles.main, focus && styles.focusStyle]}>
-      <SharedImage path={assets.search} style={styles.searchIcon} />
+      <SharedImage
+        path={assets.search}
+        style={[styles.searchIcon, focus && styles.active]}
+      />
 
       <SharedTextInput
         numeric={false}
@@ -46,7 +50,7 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
 
       <SharedButton
         title={'X'}
-        style={[styles.button, focus && styles.activeButton]}
+        style={[styles.button, focus && styles.active]}
         textStyle={styles.buttonText}
         onPress={onClearText}
       />
@@ -57,13 +61,13 @@ const SharedSearchButton: React.FC<SharedSearchButtonProps> = props => {
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    borderRadius: 20,
-    height: 40,
+    borderRadius: ResponsivenessManager.calculateWidth('5%'),
+    height: ResponsivenessManager.calculateHeight('5%'),
+    paddingHorizontal: ResponsivenessManager.calculateWidth('3%'),
     backgroundColor: colors.sandBlue,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
   },
 
   focusStyle: {
@@ -72,35 +76,35 @@ const styles = StyleSheet.create({
   },
 
   inputStyle: {
-    width: '80%',
+    width: ResponsivenessManager.calculateWidth('70%'),
     color: colors.white,
     fontSize: 18,
   },
 
   searchIcon: {
-    width: 25,
-    height: 25,
+    width: ResponsivenessManager.calculateWidth('6%'),
+    height: ResponsivenessManager.calculateHeight('6%'),
     tintColor: colors.white,
     opacity: 0.5,
   },
 
   button: {
-    width: 20,
-    borderRadius: 10,
-    height: 20,
+    width: ResponsivenessManager.calculateWidth('6%'),
+    height: ResponsivenessManager.calculateWidth('6%'),
+    borderRadius: ResponsivenessManager.calculateWidth('3%'),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.white,
     opacity: 0.5,
   },
 
-  activeButton: {
+  active: {
     opacity: 1,
   },
 
   buttonText: {
-    fontWeight: 'bold',
-    fontSize: 11,
+    fontWeight: '900',
+    fontSize: 13,
     color: colors.mediumBlue,
   },
 });

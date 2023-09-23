@@ -10,6 +10,7 @@ import {Contact} from '../../../local-database/entities/Contact';
 import SharedButton from '../../buttons/SharedButton';
 import TextField from '../../text-input-fields/text-input/TextField';
 import PhoneNumberField from '../../text-input-fields/phone-input/PhoneNumberField';
+import {ResponsivenessManager} from '../../../resources/ResponsivenessManager';
 
 const Constants = {
   TITLE: 'Create New Contact',
@@ -154,15 +155,15 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '95%',
-    height: 450,
-    backgroundColor: colors.lightBlue,
-    borderRadius: 20,
-    padding: 20,
+    width: ResponsivenessManager.calculateWidth('95%'),
+    height: ResponsivenessManager.calculateHeight('50%'),
+    borderRadius: ResponsivenessManager.calculateWidth('2%'),
+    padding: ResponsivenessManager.calculateWidth('5%'),
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 120,
+    backgroundColor: colors.lightBlue,
+    marginTop: ResponsivenessManager.calculateHeight('15%'),
   },
 
   keyboard: {
@@ -170,18 +171,13 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  title: {
-    color: colors.sandBlue,
-    fontSize: 24,
-  },
-
   iconButton: {
     alignSelf: 'center',
     borderColor: colors.sandBlue,
     borderRadius: 10,
     borderWidth: 2,
-    width: 100,
-    height: 100,
+    width: ResponsivenessManager.calculateWidth('30%'),
+    height: ResponsivenessManager.calculateHeight('13%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -199,17 +195,17 @@ const styles = StyleSheet.create({
   },
 
   buttons: {
+    width: '90%',
+    height: ResponsivenessManager.calculateHeight('7%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%',
-    height: 50,
   },
 
   button: {
-    width: 140,
+    width: '45%',
     height: '100%',
-    borderRadius: 10,
+    borderRadius: ResponsivenessManager.calculateWidth('2%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -218,10 +214,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.sandBlue,
   },
 
+  title: {
+    color: colors.sandBlue,
+    fontSize: 24,
+  },
+
   cancelButton: {
     borderColor: colors.sandBlue,
     borderWidth: 2,
-    height: 54,
   },
 
   buttonText: {
@@ -231,18 +231,6 @@ const styles = StyleSheet.create({
 
   cancelTitle: {
     color: colors.sandBlue,
-  },
-
-  inputContainer: {
-    borderWidth: 2,
-    borderColor: colors.sandBlue,
-    borderRadius: 10,
-    height: 40,
-    marginVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

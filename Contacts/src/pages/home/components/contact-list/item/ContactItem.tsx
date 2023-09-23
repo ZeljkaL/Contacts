@@ -6,6 +6,7 @@ import {Contact} from '../../../../../local-database/entities/Contact';
 import GradientText from '../../../../../shared-components/text/GradientText';
 import SharedImage from '../../../../../shared-components/images/SharedImage';
 import SharedButton from '../../../../../shared-components/buttons/SharedButton';
+import {ResponsivenessManager} from '../../../../../resources/ResponsivenessManager';
 
 interface ContactItemProps {
   contact: Contact;
@@ -50,20 +51,17 @@ const ContactItem: React.FC<ContactItemProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    width: 330,
-    height: 80,
-    borderRadius: 10,
+    width: ResponsivenessManager.calculateWidth('90%'),
+    height: ResponsivenessManager.calculateHeight('8%'),
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
     borderBottomColor: colors.sandBlue,
     borderBottomWidth: 1,
     flexDirection: 'row',
-    paddingLeft: 20,
   },
 
   textContainer: {
-    width: 190,
+    width: ResponsivenessManager.calculateWidth('60%'),
   },
 
   buttonText: {
@@ -73,9 +71,9 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
+    width: ResponsivenessManager.calculateWidth('12%'),
+    height: ResponsivenessManager.calculateWidth('12%'),
+    borderRadius: ResponsivenessManager.calculateWidth('6%'),
     borderWidth: 3,
     borderColor: colors.sandBlue,
     opacity: 0.7,
@@ -83,15 +81,13 @@ const styles = StyleSheet.create({
   },
 
   deleteButton: {
-    height: 60,
-    width: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   deleteIcon: {
-    width: 40,
-    height: 40,
+    width: ResponsivenessManager.calculateWidth('12%'),
+    height: ResponsivenessManager.calculateWidth('12%'),
     tintColor: colors.gray,
     opacity: 0.3,
   },

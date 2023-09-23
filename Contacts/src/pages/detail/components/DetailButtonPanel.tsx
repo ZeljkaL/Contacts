@@ -6,6 +6,7 @@ import SharedButton from '../../../shared-components/buttons/SharedButton';
 import SharedDropdown, {
   IDropdownItem,
 } from '../../../shared-components/dropdowns/SharedDropdown';
+import {ResponsivenessManager} from '../../../resources/ResponsivenessManager';
 
 interface DetailButtonPanelProps {
   data: IDropdownItem[];
@@ -45,26 +46,25 @@ const DetailButtonPanel: React.FC<DetailButtonPanelProps> = props => {
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    height: 80,
-    paddingBottom: 20,
+    height: ResponsivenessManager.calculateHeight('7%'),
+    paddingHorizontal: ResponsivenessManager.calculateWidth('15%'),
+    marginBottom: ResponsivenessManager.calculateHeight('2%'),
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   button: {
-    width: 60,
-    backgroundColor: colors.black,
-    borderRadius: 10,
+    width: ResponsivenessManager.calculateWidth('16%'),
     height: '100%',
+    borderRadius: ResponsivenessManager.calculateHeight('1%'),
+    backgroundColor: colors.black,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
   },
 
   buttonIcon: {
-    width: 30,
-    height: 30,
+    width: '50%',
+    height: '50%',
     tintColor: colors.beige,
   },
 
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
 
   videoIcon: {
-    marginLeft: 5,
+    marginLeft: ResponsivenessManager.calculateWidth('3%'),
     tintColor: colors.sandBlue,
   },
 });

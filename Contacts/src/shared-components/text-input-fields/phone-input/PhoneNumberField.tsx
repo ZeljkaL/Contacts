@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import ReactNativePhoneInput from 'react-native-phone-input';
 import {colors} from '../../../resources/Colors';
+import {ResponsivenessManager} from '../../../resources/ResponsivenessManager';
 
 interface PhoneNumberFieldProps {
   label: string;
@@ -58,13 +59,12 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
+    height: ResponsivenessManager.calculateHeight('5%'),
+    borderRadius: ResponsivenessManager.calculateWidth('2%'),
+    paddingHorizontal: ResponsivenessManager.calculateWidth('2%'),
     borderWidth: 2,
     borderColor: colors.sandBlue,
-    borderRadius: 10,
-    height: 40,
-    marginVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
