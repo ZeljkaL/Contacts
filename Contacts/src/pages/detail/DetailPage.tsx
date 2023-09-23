@@ -22,7 +22,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const [editContactVisible, setEditContactVisible] = useState<boolean>(false);
 
   const formattedPhoneNumber = useMemo(() => {
-    return contact.phoneNumber.replace(/[\s-]/g, '');
+    return contact.phone.replace(/[\s-]/g, '');
   }, [contact]);
 
   const fetchDropdownList = useCallback(async (): Promise<IDropdownItem[]> => {
@@ -60,7 +60,7 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
 
   const onSaveContact = useCallback(async (modifiedContact: Contact) => {
     setContact(modifiedContact);
-    await Contact.save({...modifiedContact});
+    await Contact.save([{...modifiedContact}]);
   }, []);
 
   const onCall = useCallback(() => {

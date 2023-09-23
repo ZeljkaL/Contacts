@@ -37,7 +37,7 @@ const ContactItem: React.FC<ContactItemProps> = props => {
           value={contact.name}
           colors={[colors.gray, colors.gray]}
         />
-        <Text style={styles.buttonText}>{contact.phoneNumber}</Text>
+        <Text style={styles.buttonText}>{contact.phone}</Text>
       </View>
       <SharedButton
         iconPath={assets.delete}

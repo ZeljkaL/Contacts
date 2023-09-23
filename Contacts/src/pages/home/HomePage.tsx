@@ -30,7 +30,14 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
 
   useFocusEffect(
     useCallback(() => {
-      findContacts();
+      // Note that fetched contact modification won't be applied, since API provides read-only functionality
+      Contact.fetch()
+        .then(fetchedContacts => {
+          Contact.save(fetchedContacts).then(() => {
+            findContacts();
+          });
+        })
+        .catch(_ => console.log('Error while fetching API users'));
     }, [findContacts]),
   );
 
@@ -45,7 +52,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
 
   const onSaveContact = useCallback(
     async (contact: Contact) => {
-      await Contact.save(contact);
+      await Contact.save([contact]);
 
       findContacts();
     },

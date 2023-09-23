@@ -21,7 +21,7 @@ const DetailInfoItem: React.FC<DetailInfoItemProps> = props => {
 
 const styles = StyleSheet.create({
   main: {
-    height: ResponsivenessManager.calculateHeight('8%'),
+    height: ResponsivenessManager.calculateHeight('7%'),
     textAlignVertical: 'center',
     borderBottomColor: colors.lightBlue,
     borderBottomWidth: 1,

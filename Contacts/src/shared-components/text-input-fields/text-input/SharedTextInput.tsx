@@ -57,6 +57,7 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
       value={!value ? '' : value.toString()}
       onChangeText={onChangeInput}
       placeholder={placeholder}
+      autoCapitalize="none"
       placeholderTextColor={placeholderTextColor ?? colors.mediumBlue}
       onFocus={() => onTextFocus(true)}
       onBlur={() => onTextFocus(false)}

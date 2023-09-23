@@ -1,5 +1,6 @@
 export const colors = {
   black: '#000000',
+  blackHalfShade: 'rgba(0, 0, 0, 0.7)',
   blackShade: 'rgba(0, 0, 0, 0.1)',
   white: '#FFFFFF',
   gray: '#212529',
@@ -15,4 +16,5 @@ export const colors = {
   green: '#7C9D96',
 
   error: 'red',
+  success: 'green',
 };

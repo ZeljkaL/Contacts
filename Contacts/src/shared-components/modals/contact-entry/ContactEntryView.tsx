@@ -15,11 +15,18 @@ import {ResponsivenessManager} from '../../../resources/ResponsivenessManager';
 const Constants = {
   TITLE: 'Create New Contact',
   EDIT_TITLE: 'Edit Contact',
+
   NAME_LABEL: 'Name*',
   NAME_PLACEHOLDER: 'Enter name',
 
   NUMBER_LABEL: 'Number*',
   NUMBER_PLACEHOLDER: 'Enter number',
+
+  ADDRESS_LABEL: 'Address',
+  ADDRESS_PLACEHOLDER: 'Enter address',
+
+  EMAIL_LABEL: 'Email',
+  EMAIL_PLACEHOLDER: 'Enter email',
 };
 
 interface ContactEntryViewProps {
@@ -45,7 +52,9 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
 
     const iContact: IContact = {
       name: savedContact.name,
-      number: savedContact.phoneNumber,
+      number: savedContact.phone,
+      email: savedContact.email,
+      address: savedContact.address,
       imagePath: savedContact.imagePath,
     };
 
@@ -78,7 +87,9 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
     onSave({
       id: savedContact ? savedContact.id : uuid.v4().toString(),
       name: contact.name,
-      phoneNumber: contact.number,
+      phone: contact.number,
+      address: contact.address,
+      email: contact.email,
       imagePath: contact.imagePath,
     });
 
@@ -98,6 +109,20 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
     setContact(prevState => ({
       ...prevState,
       number: value,
+    }));
+  }, []);
+
+  const onEmailInputChange = useCallback((email: string) => {
+    setContact(prevState => ({
+      ...prevState,
+      email: email,
+    }));
+  }, []);
+
+  const onAddressInputChange = useCallback((address: string) => {
+    setContact(prevState => ({
+      ...prevState,
+      address: address,
     }));
   }, []);
 
@@ -131,8 +156,22 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
           label={Constants.NUMBER_LABEL}
           placeholder={Constants.NUMBER_PLACEHOLDER}
           invalid={isPhoneInvalidOnSave}
-          value={savedContact?.phoneNumber ?? ''}
+          value={savedContact?.phone ?? ''}
           onChange={onPhoneInputChange}
+        />
+        <TextField
+          value={contact?.email}
+          numeric={false}
+          label={Constants.EMAIL_LABEL}
+          placeholder={Constants.EMAIL_LABEL}
+          onChange={onEmailInputChange}
+        />
+        <TextField
+          value={contact?.address}
+          numeric={false}
+          label={Constants.ADDRESS_LABEL}
+          placeholder={Constants.ADDRESS_LABEL}
+          onChange={onAddressInputChange}
         />
         <View style={styles.buttons}>
           <SharedButton
@@ -156,14 +195,14 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
 const styles = StyleSheet.create({
   main: {
     width: ResponsivenessManager.calculateWidth('95%'),
-    height: ResponsivenessManager.calculateHeight('50%'),
+    height: ResponsivenessManager.calculateHeight('80%'),
     borderRadius: ResponsivenessManager.calculateWidth('2%'),
     padding: ResponsivenessManager.calculateWidth('5%'),
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'center',
     backgroundColor: colors.lightBlue,
-    marginTop: ResponsivenessManager.calculateHeight('15%'),
+    marginTop: ResponsivenessManager.calculateHeight('3%'),
   },
 
   keyboard: {

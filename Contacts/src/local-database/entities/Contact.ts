@@ -1,6 +1,8 @@
 import {ILike} from 'typeorm';
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm/browser';
 import {DatabaseConnection} from '../DatabaseConnection';
+import {APIService} from '../../api/APIService';
+import {APIContact, APIContactData} from './APIContact';
 
 @Entity({name: 'Contact'})
 export class Contact {
@@ -11,7 +13,13 @@ export class Contact {
   name: string;
 
   @Column({type: 'varchar', nullable: true})
-  phoneNumber: string;
+  phone: string;
+
+  @Column({type: 'varchar', nullable: true})
+  address: string;
+
+  @Column({type: 'varchar', nullable: true})
+  email: string;
 
   @Column({type: 'varchar', nullable: true})
   imagePath: string | undefined;
@@ -19,21 +27,27 @@ export class Contact {
   constructor(
     id: string,
     name: string,
-    phoneNumber: string,
+    phone: string,
+    address: string,
+    email: string,
     imagePath?: string,
   ) {
     this.id = id;
     this.name = name;
-    this.phoneNumber = phoneNumber;
+    this.phone = phone;
+    this.address = address;
+    this.email = email;
     this.imagePath = imagePath;
   }
 
-  static async save(contact: Contact) {
+  static async save(contacts: Contact[]) {
     if (!DatabaseConnection.instance.contactRepositoryValid) {
       return;
     }
 
-    await DatabaseConnection.instance.contactRepository.save(contact);
+    await DatabaseConnection.instance.contactRepository.upsert(contacts, [
+      'id',
+    ]);
   }
 
   static async delete(contact: Contact) {
@@ -57,5 +71,14 @@ export class Contact {
         name: 'ASC',
       },
     });
+  }
+
+  static async fetch(): Promise<Contact[]> {
+    const response = await APIService.instance.genericRequest('/users');
+    const apiContacts = response.data.map((item: APIContactData) => {
+      return new APIContact(item);
+    });
+
+    return apiContacts.map((apiContact: APIContact) => apiContact.serialize());
   }
 }
