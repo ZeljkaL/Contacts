@@ -10,6 +10,7 @@ interface TextFieldProps {
   placeholder: string;
   numeric: boolean;
   invalid?: boolean;
+  secureTextEntry?: boolean;
 
   onChange: (value: string) => void;
 }
@@ -21,9 +22,10 @@ const TextField: React.FC<TextFieldProps> = props => {
       <SharedTextInput
         value={props.value}
         placeholder={props.placeholder}
+        numeric={props.numeric}
+        secureTextEntry={props.secureTextEntry}
         style={[styles.inputContainer, props.invalid && styles.invalidInput]}
         onChange={props.onChange}
-        numeric={props.numeric}
       />
     </View>
   );

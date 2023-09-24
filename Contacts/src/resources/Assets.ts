@@ -1,4 +1,5 @@
 export const assets = {
+  logo: require('../assets/logo.png'),
   edit: require('../assets/edit.png'),
   delete: require('../assets/delete.png'),
   uploadImage: require('../assets/upload_image.png'),

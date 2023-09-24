@@ -1,79 +1,45 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Contacts App
 
-# Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Overview
 
-## Step 1: Start the Metro Server
+The Contacts App is a feature-rich mobile application built with React Native that allows users to manage their contacts effortlessly. It incorporates various functionalities, including contact creation, modification, and deletion using TypeORM for data management, image uploading with the image picker library, Axios for network requests with a retry mechanism, a responsive UI to ensure compatibility with various mobile devices, and TypeScript for type checking and improved code quality.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Features
 
-```bash
-# using npm
-npm start
 
-# OR using Yarn
-yarn start
-```
+### Contact Management with TypeORM
 
-## Step 2: Start your Application
+- **Create Contacts:** Users can easily add new contacts, including details such as name, phone numbers, emails, and profile images, with data management.
+- **Modify Contacts:** Edit contact information, update phone numbers or email addresses, and change profile images while ensuring data consistency.
+- **Delete Contacts:** Effortlessly remove unwanted contacts from the app, with TypeORM handling database updates.
+- **Filter Contacts by Name:**: Users can quickly find specific contacts by entering a name in the search bar. The app will filter and display only the contacts whose names match the entered text, simplifying contact search and management.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-### For Android
+### Network Requests
 
-```bash
-# using npm
-npm run android
+- **Axios Integration:** The app leverages Axios for making network requests, ensuring efficient communication with a remote server.
+- **Generic Request Handling:** A robust and flexible Axios-based request mechanism handles various API endpoints and data formats.
+- **Retry Mechanism:** To account for possible network issues, the app incorporates a retry mechanism that automatically retries failed network requests when connectivity is restored.
 
-# OR using Yarn
-yarn android
-```
 
-### For iOS
+### Responsive UI
 
-```bash
-# using npm
-npm run ios
+- **Screen Responsiveness:** The app is designed to adapt to various screen sizes and orientations, providing a consistent and visually appealing user interface on all mobile devices.
+- **Keyboard Responsiveness:** The app ensures a seamless user experience when interacting with the keyboard, using `react-native-keyboard-aware-scroll-view`. This library automatically adjusts the view to avoid keyboard overlap and scrolling issues.
 
-# OR using Yarn
-yarn ios
-```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Linting and TypeScript
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+- **ESLint**: The project includes ESLint for code linting, helping maintain code quality and consistency.
+- **TypeScript**: TypeScript is used for type checking and providing enhanced code quality and development experience.
 
-## Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+### Navigation with React Navigation
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+- **Stack Navigation:** React Navigation is used to implement stack-based navigation, allowing users to move between screens with intuitive navigation patterns.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Image Upload
+- **Image Picker:** Users can select and upload profile pictures for their contacts using the built-in image picker library.

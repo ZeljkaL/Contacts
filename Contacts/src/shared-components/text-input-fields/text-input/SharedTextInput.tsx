@@ -6,6 +6,7 @@ interface SharedTextInputProps {
   value?: string;
   placeholder: string;
   numeric: boolean;
+  secureTextEntry?: boolean;
 
   style: StyleProp<ViewStyle>;
   placeholderTextColor?: string;
@@ -25,6 +26,7 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
     placeholderTextColor,
     style,
     numeric,
+    secureTextEntry,
     onChange,
     onFocus,
   } = props;
@@ -58,6 +60,7 @@ const SharedTextInput: React.FC<SharedTextInputProps> = props => {
       onChangeText={onChangeInput}
       placeholder={placeholder}
       autoCapitalize="none"
+      secureTextEntry={secureTextEntry}
       placeholderTextColor={placeholderTextColor ?? colors.mediumBlue}
       onFocus={() => onTextFocus(true)}
       onBlur={() => onTextFocus(false)}

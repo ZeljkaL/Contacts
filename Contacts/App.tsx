@@ -7,15 +7,14 @@ import HomePage from './src/pages/home/HomePage';
 import DetailPage from './src/pages/detail/DetailPage';
 import {DatabaseConnection} from './src/local-database/DatabaseConnection';
 import {Page, ScreenOptions, Stack, StackTheme} from './src/stack/StackConfig';
+import LoginPage from './src/pages/login/LoginPage';
 
 const App = () => {
   const [initialized, setInitialized] = useState<boolean>(false);
 
   useEffect(() => {
     StatusBar.setHidden(false);
-  }, []);
 
-  useEffect(() => {
     DatabaseConnection.instance.setup().then(() => {
       setInitialized(true);
     });
@@ -29,8 +28,9 @@ const App = () => {
           style={styles.linearGradient}>
           {initialized && (
             <Stack.Navigator
-              initialRouteName={Page.Home}
+              initialRouteName={Page.Login}
               screenOptions={ScreenOptions}>
+              <Stack.Screen name={Page.Login} component={LoginPage} />
               <Stack.Screen name={Page.Home} component={HomePage} />
               <Stack.Screen name={Page.Details} component={DetailPage} />
             </Stack.Navigator>

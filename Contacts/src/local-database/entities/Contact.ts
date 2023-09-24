@@ -1,13 +1,14 @@
-import {ILike} from 'typeorm';
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm/browser';
-import {DatabaseConnection} from '../DatabaseConnection';
-import {APIService} from '../../api/APIService';
-import {APIContact, APIContactData} from './APIContact';
+import {AxiosResponse} from 'axios';
+import {ContactRepository} from './ContactRepository';
+import {NetworkService} from '../../networking/NetworkService';
 
 @Entity({name: 'Contact'})
 export class Contact {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  private static contactRepository = new ContactRepository();
+
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({type: 'varchar', nullable: true})
   name: string;
@@ -25,7 +26,7 @@ export class Contact {
   imagePath: string | undefined;
 
   constructor(
-    id: string,
+    id: number,
     name: string,
     phone: string,
     address: string,
@@ -40,45 +41,30 @@ export class Contact {
     this.imagePath = imagePath;
   }
 
-  static async save(contacts: Contact[]) {
-    if (!DatabaseConnection.instance.contactRepositoryValid) {
-      return;
-    }
-
-    await DatabaseConnection.instance.contactRepository.upsert(contacts, [
-      'id',
-    ]);
-  }
-
-  static async delete(contact: Contact) {
-    if (!DatabaseConnection.instance.contactRepositoryValid) {
-      return;
-    }
-
-    await DatabaseConnection.instance.contactRepository.remove(contact);
-  }
-
   static async find(name?: string): Promise<Contact[]> {
-    if (!DatabaseConnection.instance.contactRepositoryValid) {
-      return;
-    }
-
-    return await DatabaseConnection.instance.contactRepository.find({
-      where: {
-        ...(name && {name: ILike(`%${name}%`)}),
-      },
-      order: {
-        name: 'ASC',
-      },
-    });
+    return this.contactRepository.find(name);
   }
 
   static async fetch(): Promise<Contact[]> {
-    const response = await APIService.instance.genericRequest('/users');
-    const apiContacts = response.data.map((item: APIContactData) => {
-      return new APIContact(item);
-    });
+    const response = await NetworkService.instance.get('/contact');
+    this.contactRepository.save(response.data);
+    return response.data;
+  }
 
-    return apiContacts.map((apiContact: APIContact) => apiContact.serialize());
+  static async create(contact: Contact): Promise<Contact> {
+    const response = await NetworkService.instance.post('/contact', contact);
+    this.contactRepository.save([response.data]);
+    return response.data;
+  }
+
+  static async modify(contact: Contact): Promise<AxiosResponse> {
+    this.contactRepository.save([contact]);
+    return await NetworkService.instance.put(`/contact/${contact.id}`, contact);
+  }
+
+  static async delete(contact: Contact): Promise<AxiosResponse> {
+    this.contactRepository.delete(contact);
+
+    return await NetworkService.instance.delete(`/contact/${contact.id}`);
   }
 }

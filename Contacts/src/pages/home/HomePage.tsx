@@ -30,14 +30,11 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
 
   useFocusEffect(
     useCallback(() => {
-      // Note that fetched contact modification won't be applied, since API provides read-only functionality
       Contact.fetch()
-        .then(fetchedContacts => {
-          Contact.save(fetchedContacts).then(() => {
-            findContacts();
-          });
+        .then(_ => {
+          findContacts();
         })
-        .catch(_ => console.log('Error while fetching API users'));
+        .catch(error => console.log('Error while fetching API users: ', error));
     }, [findContacts]),
   );
 
@@ -52,8 +49,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
 
   const onSaveContact = useCallback(
     async (contact: Contact) => {
-      await Contact.save([contact]);
-
+      await Contact.create(contact);
       findContacts();
     },
     [findContacts],
@@ -66,7 +62,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
     findContacts();
   }, [pendingContact, findContacts]);
 
-  const onDeleteButtonPress = useCallback((contact: Contact) => {
+  const showDeletionDialog = useCallback((contact: Contact) => {
     setPendingContact(contact);
     setDeleteVisible(true);
   }, []);
@@ -86,7 +82,7 @@ const HomePage: React.FC<PageProps<Page.Home>> = props => {
       <ContactList
         contacts={contacts}
         onContactPress={onContactPress}
-        onDeleteContact={onDeleteButtonPress}
+        onDeleteContact={showDeletionDialog}
       />
 
       {createVisible && (

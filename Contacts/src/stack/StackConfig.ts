@@ -28,11 +28,13 @@ export const ScreenOptions: NativeStackNavigationOptions = {
 };
 
 export enum Page {
+  Login = 'Login',
   Home = 'Contacts',
   Details = 'Details',
 }
 
 export type RootStackParamList = {
+  [Page.Login]: undefined;
   [Page.Home]: undefined;
   [Page.Details]: DetailProps;
 };

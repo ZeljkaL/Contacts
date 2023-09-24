@@ -13,6 +13,7 @@ import SharedButton from '../../shared-components/buttons/SharedButton';
 import {IDropdownItem} from '../../shared-components/dropdowns/SharedDropdown';
 import ContactEntryView from '../../shared-components/modals/contact-entry/ContactEntryView';
 import {ResponsivenessManager} from '../../resources/ResponsivenessManager';
+import {Utils} from '../../resources/Utils';
 
 const DetailPage: React.FC<PageProps<Page.Details>> = props => {
   const {route} = props;
@@ -25,42 +26,16 @@ const DetailPage: React.FC<PageProps<Page.Details>> = props => {
     return contact.phone.replace(/[\s-]/g, '');
   }, [contact]);
 
-  const fetchDropdownList = useCallback(async (): Promise<IDropdownItem[]> => {
-    const viberLink = `viber://contact?number=${formattedPhoneNumber}`;
-    const whatsappLink = `whatsapp://send?phone=${formattedPhoneNumber}`;
-    const skypeLink = `skype:${formattedPhoneNumber}?call`;
-
-    return [
-      {
-        name: 'Viber',
-        icon: assets.viber,
-        link: viberLink,
-        disabled: !(await Linking.canOpenURL(viberLink)),
-      },
-      {
-        name: 'WhatsApp',
-        icon: assets.whatsapp,
-        link: whatsappLink,
-        disabled: !(await Linking.canOpenURL(whatsappLink)),
-      },
-      {
-        name: 'Skype',
-        icon: assets.skype,
-        link: skypeLink,
-        disabled: !(await Linking.canOpenURL(skypeLink)),
-      },
-    ];
-  }, [formattedPhoneNumber]);
-
   useEffect(() => {
-    fetchDropdownList().then(response => {
+    Utils.fetchMedia(formattedPhoneNumber).then(response => {
       setDropdownList(response);
     });
-  }, [fetchDropdownList]);
+  }, [formattedPhoneNumber]);
 
-  const onSaveContact = useCallback(async (modifiedContact: Contact) => {
-    setContact(modifiedContact);
-    await Contact.save([{...modifiedContact}]);
+  const onSaveContact = useCallback((modifiedContact: Contact) => {
+    Contact.modify(modifiedContact).then(() => {
+      setContact(modifiedContact);
+    });
   }, []);
 
   const onCall = useCallback(() => {

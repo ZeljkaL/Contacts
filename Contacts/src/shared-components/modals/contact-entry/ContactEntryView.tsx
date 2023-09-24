@@ -1,11 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import uuid from 'react-native-uuid';
 import ImagePicker from 'react-native-image-crop-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {assets} from '../../../resources/Assets';
 import {colors} from '../../../resources/Colors';
-import {IContact} from '../../../types/IContact';
 import {Contact} from '../../../local-database/entities/Contact';
 import SharedButton from '../../buttons/SharedButton';
 import TextField from '../../text-input-fields/text-input/TextField';
@@ -27,6 +25,11 @@ const Constants = {
 
   EMAIL_LABEL: 'Email',
   EMAIL_PLACEHOLDER: 'Enter email',
+
+  NAME_FIELD: 'name',
+  PHONE_FIELD: 'phone',
+  EMAIL_FIELD: 'email',
+  ADDRESS_FIELD: 'address',
 };
 
 interface ContactEntryViewProps {
@@ -39,27 +42,10 @@ interface ContactEntryViewProps {
 const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
   const {savedContact, onSave, onCancel} = props;
 
-  const [contact, setContact] = useState<IContact>(null);
-  const [isNameInvalidOnSave, setIsNameInvalidOnSave] =
-    useState<boolean>(false);
-  const [isPhoneInvalidOnSave, setIsPhoneInvalidOnSave] =
-    useState<boolean>(false);
+  const [contact, setContact] = useState<Contact>(savedContact);
 
-  useEffect(() => {
-    if (!savedContact) {
-      return;
-    }
-
-    const iContact: IContact = {
-      name: savedContact.name,
-      number: savedContact.phone,
-      email: savedContact.email,
-      address: savedContact.address,
-      imagePath: savedContact.imagePath,
-    };
-
-    setContact(iContact);
-  }, [savedContact]);
+  const [nameInvalid, setNameInvalid] = useState<boolean>(false);
+  const [phoneInvalid, setPhoneInvalid] = useState<boolean>(false);
 
   const onUploadImage = useCallback(async () => {
     const image = await ImagePicker.openPicker({
@@ -75,55 +61,33 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
 
   const onSaveContact = useCallback(() => {
     if (!contact || !contact.name) {
-      setIsNameInvalidOnSave(true);
+      setNameInvalid(true);
       return;
     }
 
-    if (!contact.number) {
-      setIsPhoneInvalidOnSave(true);
+    if (!contact.phone) {
+      setPhoneInvalid(true);
       return;
     }
 
-    onSave({
-      id: savedContact ? savedContact.id : uuid.v4().toString(),
-      name: contact.name,
-      phone: contact.number,
-      address: contact.address,
-      email: contact.email,
-      imagePath: contact.imagePath,
-    });
-
+    onSave(contact);
     onCancel();
-  }, [contact, savedContact, onSave, onCancel]);
+  }, [contact, onSave, onCancel]);
 
-  const onNameInputChange = useCallback((updatedName: string) => {
-    setIsNameInvalidOnSave(false);
+  const handleInputChange = useCallback((value: string, fieldName: string) => {
     setContact(prevState => ({
       ...prevState,
-      name: updatedName,
+      [fieldName]: value,
     }));
-  }, []);
 
-  const onPhoneInputChange = useCallback((value: string) => {
-    setIsPhoneInvalidOnSave(false);
-    setContact(prevState => ({
-      ...prevState,
-      number: value,
-    }));
-  }, []);
+    if (fieldName === Constants.NAME_FIELD) {
+      setNameInvalid(false);
+      return;
+    }
 
-  const onEmailInputChange = useCallback((email: string) => {
-    setContact(prevState => ({
-      ...prevState,
-      email: email,
-    }));
-  }, []);
-
-  const onAddressInputChange = useCallback((address: string) => {
-    setContact(prevState => ({
-      ...prevState,
-      address: address,
-    }));
+    if (fieldName === Constants.PHONE_FIELD) {
+      setPhoneInvalid(false);
+    }
   }, []);
 
   return (
@@ -149,29 +113,29 @@ const ContactEntryView: React.FC<ContactEntryViewProps> = props => {
           numeric={false}
           label={Constants.NAME_LABEL}
           placeholder={Constants.NAME_PLACEHOLDER}
-          invalid={isNameInvalidOnSave}
-          onChange={onNameInputChange}
+          invalid={nameInvalid}
+          onChange={value => handleInputChange(value, Constants.NAME_FIELD)}
         />
         <PhoneNumberField
           label={Constants.NUMBER_LABEL}
           placeholder={Constants.NUMBER_PLACEHOLDER}
-          invalid={isPhoneInvalidOnSave}
+          invalid={phoneInvalid}
           value={savedContact?.phone ?? ''}
-          onChange={onPhoneInputChange}
+          onChange={value => handleInputChange(value, Constants.PHONE_FIELD)}
         />
         <TextField
           value={contact?.email}
           numeric={false}
           label={Constants.EMAIL_LABEL}
           placeholder={Constants.EMAIL_LABEL}
-          onChange={onEmailInputChange}
+          onChange={value => handleInputChange(value, Constants.EMAIL_FIELD)}
         />
         <TextField
           value={contact?.address}
           numeric={false}
           label={Constants.ADDRESS_LABEL}
           placeholder={Constants.ADDRESS_LABEL}
-          onChange={onAddressInputChange}
+          onChange={value => handleInputChange(value, Constants.ADDRESS_FIELD)}
         />
         <View style={styles.buttons}>
           <SharedButton
